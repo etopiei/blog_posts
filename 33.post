@@ -48,8 +48,14 @@ I can't count how many times I have visited the GitHub page with the instruction
 <h3> How to: Create a new sudo user</h3>
 <p>
 $ <code> adduser 'username' </code><br>
-$ <code usermod -aG sudo 'username'</code><br>
+$ <code> usermod -aG sudo 'username'</code><br>
 Nice simple one, but gets the job done.
 </p>
 That might be all for now, but I may add to this a little bit as I go.
 </p>
+<style>
+code {
+    color: 
+    #6250b9;
+}
+</style>
