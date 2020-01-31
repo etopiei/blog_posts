@@ -1,27 +1,31 @@
 <p>
 At various times I have noted down some handy bash scripts that I constantly have to DuckDuckGo for, but no more, I'm putting them here so I never lose them, and may update this periodically. Hopefully these can help other people too, and I will try and keep them with good descriptions so they are findable.
-<br>
+<br><br>
 <h3> How to: Remove Whitespace From Filenames </h3>
 <p>
 $ <code> for x in *.md; do mv "$x" "${x// /}"; done; </code><br>
 This is a nice one liner that comes in handy quite a bit. I originally used this to fix up my ournal entries names to be consistent for future scripting. (replace the *.md) with a glob that matches the files you want to operate on.
 </p>
+<br>
 <h3> How to: Count Words in a Group of Text Files (plus get an average) </h3>
 <p>
 $ <code>for x in *.md; do cat "$x" | wc -w; done | awk '{s+=$1} END {print s}'</code><br>
 $ <code>for x in *.md; do cat "$x" | wc -w; done | awk '{s+=$1; t+=1} END {print s/t}'</code><br>
 Both these commands are quite succinct, I used this also to get some information about my journalling habits. Initally the wc part was very apparent to me, and some vague recollection from an OS class in Uni told me to look to awk for the answer, but it took a couple of minutes to construct, so I have preserved it here to save myself some future work. (Again replace *.md with the necessary glob)
 </p>
+<br>
 <h3>How to: Convert Markdown to PDF</h3>
 <p>
 $ <code> pandoc -o document.pdf document.md </code><br>
 This one could be gleaned from a brief reading of the pandoc man page, however I write a lot of stuff in markdown, but sometimes have to send it to someone who prefers a more 'conventional' file format, so PDF is a good way to go.
 </p>
+<br>
 <h3>How to: Extract specific pages of a PDF into a shiny new PDF</h3>
 <p>
 $ <code> pdftk full.pdf cat 12-15 output outfile_p12-15.pdf </code><br>
 I hate the syntax of this command, and honestly the options seem strange so it's a good one to jot down. This command will take the 12-15th pages of 'full.pdf' and output them to a file named 'outfile_p12-15.pdf'. This is such an odd command I actually had to run it while writing this post to ensure it works, but lo and behold that is really how you use this utility. Who would've thought.
 </p>
+<br>
 <h3>How to: Merge PDF's (Done Two Ways)</h3>
 <p>
 $ <code> qpdf --empty --pages 1.pdf 2.pdf -- combined.pdf </code><br>
@@ -29,22 +33,26 @@ $ <code> pdfunite 1.pdf 2.pdf combined.pdf </code><br>
 I personally prefer option 2 for brevity.<br>
 (Wow, just noticing there are a lot of document based stuff in this post.)
 </p>
+<br>
 <h3>Create an Admin MYSQL User</h3>
 <p>
 > <code> CREATE USER 'username'@'host' IDENTIFIED BY 'password';<br>
 GRANT ALL PRIVILEGES ON * . * TO 'username'@'host';</code><br>
 I have had to google this so many times, I saved myself a bit more time by writing it done somewhere safe.
 </p>
+<br>
 <h3>How to: Format a C file nicely</h3>
 <p>
 $ <code>clang-format -i <filename></code><br>
 The need for this arose when I copied some code from the internet and the formatting was all over the place due to tab/spaces problems. I then found this handy command that rectified the situation beautifully. I'm sure this is well known, but it was a life saver for me and I wish I knew about it earlier.
 </p>
+<br>
 <h3>How to: Start SSH Agent and add Key</h3>
 $ <code>eval "$(ssh-agent -s)"</code><br>
 $ <code>ssh-add ~/.ssh/KEY</code><br>
 I can't count how many times I have visited the GitHub page with the instructions for setting up SSH keys and these are copied verbatim, but it's good to have these in the same place.
 </p>
+<br>
 <h3> How to: Create a new sudo user</h3>
 <p>
 $ <code> adduser 'username' </code><br>
