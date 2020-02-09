@@ -1,0 +1,45 @@
+<p>
+A couple of years ago I made a post about my workflow, and how I organise myself and maximise my productivity. In the years since I've continued to refine my process and it looks pretty different now so I am going to write a little update here, and go into a little more depth about why and how I use particular tools. As well as this I will discuss what motivated the changes from the tools I was using.
+</p>
+<br><h3>Setting the Scene</h3>
+<p>
+Before beginning it's important to clarify two things, number one: I am now working full time. In the previous post I was a full time student, so both my time, and the tasks I want to accomplish have changed in nature quite a bit. Secondy, last time I wrote a post like this I was using macOS on my laptop for the most part, however I am now linux full time (Manjaro for this interested). Anyway, with those caveats out of the way let's jump in.
+</p>
+<br><h3>Habits</h3>
+<p>One of my main organisational tools is my Habit tracker. On my phone I have a super simple app called Loop Habit Tracker (which is the only tool from my first post which I use regularly now). It is a very basic interface where you can add habits, set how often you want to do them and then tick each day you do one.
+The habits I have setup on it are:
+</p>
+<ul>
+	<li> Reading </li>
+	<li> Mood Entry </li>
+	<li> Running </li>
+	<li> Writing </li>
+	<li> Push Ups </li>
+	<li> Water Plant </li>
+	<li> Gym </li>
+	<li> Meditation </li>
+</ul>
+<p>
+Having these items tracked simply provides good motivation to do things regularly that have a small impact, that adds up to a big impact. It also helps me ensure I can have what I think of as 'productive leisure'. I am a big believer in the ability of small incremental progress being the key to improvement and these habits keep me focussed on my goals and constantly improving.<br>
+For instance my reading streak is now almost at 150 days in a row, which has boosted my knowledge on a variety of topics, and kept my mind active. Similarly my 'writing' habit last year was on a streak of over 100 days, and this practice has made me feel more confident in my communication, as well as more balanced as I have an outlet for reflection. <br>
+</p>
+<br><h3>To-Dos</h3>
+<p>Another tenet of my organisational workflow is to-dos. I like to keep things simple, portable and maintainable and for that reason I have been moving away from my old favourite 2do. (This move is also motivated by my move to linux, as there is no native 2do app for linux and syncing is tricky and I was tired of relying on my phone to view my current tasks. I am now utilising 'taskell' for managing my todos. It is a simple CLI Kanban board, I like it for a couple of reasons. Predominantly it stores files in markdown, so even if the app isn't installed I can still view and edit my toods by editing plain text files. As well as this I really like the Kanban style of thinking, as sometimes a simple checkbox is not sufficient to capture the complexities of a task. With this app I can prioritise tasks, seperate lists into different files, and most importantly sync easily between devices.<br>
+I currently have not many lists as now that I am working my life is a little more straight-forward. These include:
+</p>
+<ul>
+	<li> Books: To-Read, In Progress, Done </li>
+	<li> Projects: Backlog, WIP, Done </li>
+	<li> Shopping: To buy </li>
+	<li> Current: This has replaced my desk note, can include washing, dishes, reminder to text someone etc. </li>
+</ul>
+<p>This simple system ensures that answering the question of what should I do with my time is an easy one to answer. It allows to set priorities in different areas of my life and keeps me from having to remember these things in my head.<br>As I am still in transition period, I haven't yet moved my movie/tv shows list across, but as I get used to using this tool I think I will move these over soon. (Perhaps I should add this to my current list).</p>
+<br><h3>Calendar</h3>
+<p> Calendar is pretty simple, I use Google Calendar to manage all my appointments/social engagements. I have work blocked out and then seperate calendars for Family/Friends, Projects, Work, Personal. This allows me to categorise events, and they each have an implicit priority indicated by their colour. It syncs to my phone and computer and is available anywhere really.
+<br><h3>Work Management</h3>
+<p> For work at NAB, we use JIRA, which I quite like, as it fits in well wiht the way I use 'taskell' at home. At AI Media we use Trello, and this works nicely for similar reasons. </p>
+<br>
+<p>
+So that's more or less how I approach tasks and stay on top of things (for the most part). I'd love to hear any recommendations, or about how you organise your life. I am always on the lookout for new productivity hacks and am interested the way people approach things. So don't hesitate to reach out on twitter or other social media. (Be warned however that I only check Twitter on Sunday evenings so I may not be too quick to respond - another post is coming about that too, if you're curious).<br>
+Oh and before I forget, here is the link to the original blog post where you can compare the tools I use now compared to back then: <a href="https://blog.etopiei.com/index.php?id=https://blog.etopiei.com/index.php?id=14">here.</a>See you soon.<br><br>
+<p> - etopiei (9/2/2020) </p>
