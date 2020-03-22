@@ -5,28 +5,28 @@
 </p><br>
 <h3> Situation </h3>
 <p>
-I have for many years now had an icloud account. This stems from my iPhone, iPod Touch and Macbook weilding days and served me largely very well over this time. However, in the last few years I have made the switch to Android and Linux, for my phone and laptop respectively. This has led to a number of difficulties (to be fair some of which stem from the way this iCloud account was setup - which I'll ge into), and has ultimately made me angry enough to write this post.<br>
-The crux of the problem, is that I genuinely cannot access my email a large percentage of the time, and otherwise I have to settle for an inferior experience, with no option of changing. The most frustrating part of this all is that Apple has been malevolant and disrespecting to it's non eco-systemed, wall-gardened users and actively made their services more difficult to use in this situation. It is not only bad design and a poor user experience but arguable even anti-competitive.<br>
+I have for many years now had an icloud account. This stems from my iPhone, iPod Touch and MacBook wielding days and served me largely very well over this time. However, in the last few years I have made the switch to Android and Linux, for my phone and laptop respectively. This has led to a number of difficulties (to be fair some of which stem from the way this iCloud account was setup - which I'll ge into), and has ultimately made me angry enough to write this post.<br>
+The crux of the problem, is that I genuinely cannot access my email a large percentage of the time, and otherwise I have to settle for an inferior experience, with no option of changing. The most frustrating part of this all is that Apple has been malevolent and disrespecting to it's non eco-systemed, wall-gardened users and actively made their services more difficult to use in this situation. It is not only bad design and a poor user experience but arguable even anti-competitive.<br>
 </p><br>
 <h3> Part 1 - My Bad </h3>
 <p>
     As I alluded to in the previous section of this post, I am partly to blame for this less-than ideal situation I now find myself in and this is due to the way my iCloud account was setup.<br>
-    Back when I was in school I decided I would like to no longer use my hotmail account, for a number of reasons, but largely, I felt I had outgrown the 'pink_bananas' moniker.<br>
-    While setting this up, I of course opted for an iCloud email (I had a macbook and an iPhone at the time). No worries it turns out it is very easy to set this up on either of these devices. <br>
+    Back when I was in school I decided I would like to no longer like to use my hotmail account, for a number of reasons, but largely, I felt I had outgrown the 'pink_bananas' moniker.<br>
+    While setting this up, I of course opted for an iCloud email (I had a macbook and an iPhone at the time).<br>
     Once I had set it up, I realised I would still like to access the families' movie and music collection. (I believe this all happened before Family Sharing was a thing). So I signed into my parents' Apple account as well. The un-intended side effect of this action, was that it seems now that this inextricable linked our iCloud accounts together. <br>
-    Now this was probably an error on my part, and in fact there may even have been a dialog explaining this process (my recollection of these events is hazy), it helped to ensure that the proceeeding events could unfold in a most unhelpful manner. <br>
+    Now this was probably an error on my part, and in fact there may even have been a dialog explaining this process (my recollection of these events is hazy), it helped to ensure that the proceeding events could unfold in a most unhelpful manner. <br>
 </p><br>
 <h3>Part 2 - App Specific Passwords</h3>
 <p>
     Some time ago, Apple took two excellent steps for security, which I think they should be applauded for, those being:
     <ul>
-        <li> - App Specific Passwords for Third Party Apps</li>
-        <li> - 2FA Authentication for iCloud accounts</li>
+        <li> App Specific Passwords for Third Party Apps</li>
+        <li> 2FA Authentication for iCloud accounts</li>
     </ul>
     I was genuinely excited when I read this news, however this quickly translated into bitter grumblings when I tried to add a password for my favourite email client at the time. (Spark)<br>
     I made the unfortunate discovery that these two boosts to security where not mutually exclusive, i.e. in order to be able to obtain an app specific password for Spark (read: 'Use the app'), I must first enable 2FA on my iCloud account.<br>
     This would have been fine, however as explained in Part 1, my iCloud account was now linked, for reasons best known to Apple, or perhaps Year 9 me, and as such this triggered 2FA for my parents' devices as well.<br>
-    This turned out to be a huge nusciance, as my Dad or Mum would try and buy something on the AppStore and it would prompt them to auhtorize this request via another device, but the notificaiton would only come to my computer, or some other ridiculous scenario.<br>
+    This turned out to be a huge nuisance, as my Dad or Mum would try and buy something on the App Store and it would prompt them to authorize this request via another device, but the notification would only come to my computer, or some other ridiculous scenario.<br>
     All in all this lead to the decree, that the 2FA authentication be turned off. Fair enough, except I could no longer use Spark and I was relegated to Apple's Mail. <br>
     You may think this is the meat of my complaining, but just you wait, there is more to come. <br>
 </p><br>
@@ -39,15 +39,15 @@ The crux of the problem, is that I genuinely cannot access my email a large perc
     You will note here, the lack of an email option. There is instead a link that explains to you that it is in fact very easy to access your email from you Apple Mac, iPhone, iPad, or Desktop. <br>
     Hmmmm.... <br>
     This makes me mad, and despite the fact that I found you can rather hackily work your way around this by 'Requesting Desktop Site' in Firefox, and then navigating around a terribly designed mail client. It makes me mad because it doesn't seem like a fair user experience to say, oh you want to access something, spend >$1000 on a device.<br>
-    And it's not like there is some technical reason why the site need be protected from malovelant Android users with their non WebKit browser. It is pure bollocks to draw this arbritary distinction, and deny access to a whole host of users this way.<br>
-    So that's the situation, and where my greivances lie with Apple. That being said, I feel the need to clear the air a bit.<br>
+    And it's not like there is some technical reason why the site need be protected from malevolent Android users with their non WebKit browser. It is pure bollocks to draw this arbitrary distinction, and deny access to a whole host of users this way.<br>
+    So that's the situation, and where my grievances lie with Apple. That being said, I feel the need to clear the air a bit.<br>
 </p><br>
 <h3>Conclusion - Whose Fault is this Really?</h3>
 <p>
     Save the bonus rant I have included at the bottom of this post, that pretty much does it for me. I've had my say, I've vented my frustrations, and I am entirely aware (perhaps painfully so) that nothing is going to change here.
     I do want to address two more points though:<br>
     1. I know that I brought myself into this mess by abandoning Apple devices, while retaining an iCloud email address. Apple has a right to make their experience on their devices as delightful as possible. While I feel the walls of the eco-system are just a bit too high, and barbed wired, and electrical, they are there for a reason, and that's to make the majority of users feel very safe and happy, and they do an excellent job of this. (well maybe not the Catalina upgrade, but that has been extensively covered). <br>
-    2. Secondly, I don't want this coming off as blantant dismissal of Apple and their services, I still use Apple Music nearly every day, and am glad that they have taken the time to create an Android application for that purpose. (A move that many years ago would've been shocking) As well as this I use a Macbook at work, and I really enjoy developing on it (aside from the touch bar escape key). So certainly I enjoy a lot of what Apple do, and has done for technology. These griped needn't detract from that.
+    2. Secondly, I don't want this coming off as blatant dismissal of Apple and their services, I still use Apple Music nearly every day, and am glad that they have taken the time to create an Android application for that purpose. (A move that many years ago would've been shocking) As well as this I use a Macbook at work, and I really enjoy developing on it (aside from the touch bar escape key). So certainly I enjoy a lot of what Apple do, and has done for technology. These gripes needn't detract from that.
     For those who have not yet had their fill of my inane ramblings, there is a bonus mini-rant included below for your consumption.
 </p><br>
 <h3>Bonus Mini Rant</h3>
