@@ -28,3 +28,9 @@ This app will soon be on GitHub, so stay tuned, and if you have any ideas and/or
 <p>
  - etopiei (27/3/2020)
 </p>
+<style>
+img {
+    width: 80%;
+    margin-left: 10%; 
+}
+</style>
