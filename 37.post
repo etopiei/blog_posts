@@ -1,0 +1,30 @@
+<p>
+I have recently started work on a project that may be of interest and thought I'd share my progress, aims and thoughts.<br>
+The project aims to give users the power to investigate their own mood over time as well as the main ideas on their mind. <br>
+It does this my analysing journal entries, though now that I think about it, this could work equally well for Instagram, Twitter and Facebook posts. (This would at least be more marketable).<br>
+</p><br>
+<h3>Basic MVP</h3>
+<p>
+Here's a quick example of what the first prototype looked like: <br>
+<img src="https://blog.etopiei.com/img/journal-analyse.jpeg" alt="First Prototype"><br>
+Bear in mind I've improved the interface already, but the idea of having the sentiment over time as well as the main topics is a nice way of quickly visualising moods.<br>
+This was all hacked together in a day, so there is still a lot of work to do, but I am enjoying this project so far and hoping it will give me some good insight, and if I design it well, perhaps it could be useful to others as well.
+</p><br>
+<h3>Ideas</h3>
+<p>
+As you can see from the example above one obvious problem is that there is no filtering on the words used in the word cloud. The most common word in all these entries is 'is'. This doesn't relate at all to my thoughts, feelings and ideas, and therefore needn't be the most prominent in the cloud. Because of this I think one of the first steps will be to remove all filler words from the word cloud distribution.<br>
+Another thing I have given a bit of thought, but am still not sure as to the approach is how to extract the date from these files. Unfortunately my journal entries aren't dated, and while this example worked out, due to my consistent naming scheme, it won't work for most use cases. There are a couple of options I have considered. Firstly, I could use the 'Date Created' attribute of the file itself, however due to file system operations, I'm not sure if this will serve as a good indicator as to the date where the entry was written. On the other-hand I don't want to alter the scheme too much, or provide unnecessary amounts of configuration, so perhaps I will leave it up to the user to give the files in their correct order when constructing the data.
+</p><br>
+<h3>Thinking Bigger</h3>
+<p>
+This project originated from an idea of taking all my data that I save currently: Sleep Data, Daily Activities, Daily Mood and Exercise and creating a visualisation platform so I can see how I am tracking across various aspects of my life. This small start seems like a more universally useful part of the larger picture, so I think for now I will devote a bit more time to this. Perhaps later I will work on these other features, to get a more complete picture of me, but this could be a nice mini-project I am thinking.
+</p><br>
+<h3>How it Works</h3>
+<p>
+Currently this is a quick node.js script, express app and svelte front-end, though I am considering switching to python for the back-end as well as data processing. All the data is processed ahead of time, so currently this is very quick to load and display.<br>
+This app currently benefits from several libraries including Chart.js, wordcloud2.js and a cool sentiment analysis library that was super simple to use. (I am barely touching a lot of the features that make this library so powerful, and it would be nice to include some more details).<br>
+This app will soon be on GitHub, so stay tuned, and if you have any ideas and/or feedback about this I'd love to hear from you. (Especially if you can come up with a name, I am a bit stuck on that currently).<br>
+</p><br>
+<p>
+ - etopiei (27/3/2020)
+</p>
