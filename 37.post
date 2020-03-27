@@ -6,7 +6,7 @@ It does this my analysing journal entries, though now that I think about it, thi
 <h3>Basic MVP</h3>
 <p>
 Here's a quick example of what the first prototype looked like: <br>
-<img src="https://blog.etopiei.com/img/journal-analyse.jpeg" alt="First Prototype"><br>
+<img src="https://blog.etopiei.com/img/startingoff.png" alt="First Prototype"><br>
 Bear in mind I've improved the interface already, but the idea of having the sentiment over time as well as the main topics is a nice way of quickly visualising moods.<br>
 This was all hacked together in a day, so there is still a lot of work to do, but I am enjoying this project so far and hoping it will give me some good insight, and if I design it well, perhaps it could be useful to others as well.
 </p><br>
