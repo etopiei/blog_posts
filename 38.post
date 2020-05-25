@@ -80,3 +80,9 @@ The take-away I got from the Queen Attack problem was the power of partial appli
 There's plenty more I'd like to write about Types, the insanely nice |> operator, and even some things I didn't like initially, but I think I will keep this short(er) for now. As there will be plenty more time for depth as I continue to explore. For now I can say that I am excited to continue learning F#, and am quite taken with it as a language for now. My one concern is where it will fit in the stack. I feel it's most likely that I will use it server-side, but perhaps WASM with Bolero is worth exploring too. Time will tell.<br><br>
 - etopiei (25/05/2020)
 </p>
+<style>
+pre {
+	line-height: initial;
+	font-size: initial;
+}
+</style>
