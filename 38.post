@@ -1,0 +1,82 @@
+<p>In the last week or so I have taken it upon myself to start learning F#. I wanted to share a little bit of my thoughts, say early impressions of this new language, as well as my motiviations for learning and my method. <br>
+According to Simon Sinek it is good to start with the 'why' so that's exactly what I'll do. </p><br>
+<h2> Why a new language? Why F#? </h2>
+<p>I have always been a person who likes to learn new things. I enjoy challenging myself and growing in my experience as well as understanding. This is part of the appeal of a new language, it forces you to re-frame problems and to ensure you understand the underlying principles of your language of choice better.<br> Now in my day to day job I tend to write either in Javascript (Typescript really, but more generally JS) and Java. Now while I have some thoughts about Java which I will save for another day, I really enjoy writing javascript, particularly when Typescript is in the mix too. Funnily enough, to me Javascript shines on the back-end moreso than the front-end. Being able to pass functions, callbacks and promises around with relative ease is really nice, and I think it is one of the best languages in terms of power / knowledge ratio. i.e. A little javascript knowledge can take you a long way. At home, and in my own projects I like to write in Python, Javascript and I am trying to write more in Rust. One thing the keen obsever may note, is that these languages all have something in common... That's right! They are all predominantly imperative languages. (Yeah they are all sort of multi-paradigm, but really you get my meaning).<br><br>
+Having studied Haskell a bit in Uni, I had some early perceptions formed of functional programming. At first I grumbled about it, then I grew to love it's elegance, though ultimately dismissing it as not the right tool for a real life project, and more of a hobbiest/academic's favourite toy. However, thinking functionally was one of the more beneficial elements of my university education, and I wanted to pursue this some more, and improve my programming in all languges, as well as the way I handle problems.<br>Because of this I wanted to pick something completely new, I had dabbled with ReasonML for a UI project (using Revery) but found the documentation lacking, and struggled to get started, I had already delved a bit into Haskell, and while enjoying it, I wasn't confident of my ability to be productive with it, and was slightly put off by the apparent pretentiousness, which I am sure is just an unfortunate sterotype. In the end, all these reasons contributed to my eventual adoption of F# as my language to learn. I liked the fact that it utilised the .NET eco-system and would therfore have lots of well-tested and useful libraries, it wasn't entirely functional, but heavily favoured it, which again gave me hope of my ability to learn it and be productive quickly. My only concern was that it being .NET and all, I wasn't too sure how it would fare on Linux. So without further ado, let's dive in.</p><br>
+<h2>What have I learnt? And how?</h2>
+My first impression of F# after installation (which was a breeze with pacman) was the essential 'Hello World':<br>
+<pre><code class="fsharp">printfn "Hello, World!"</code><pre>
+Pretty standard, and pretty simple, from this the only important things to gather are:
+<ul>
+<li> Like basically all functional languages I've touched, functions are called via space seperators between name and arguments </li>
+<li>No need to #inlcude or anything like that for at least some functionality, so that's nice</li>
+</ul>
+Moving along, I looked at the various resources available on the F# Foundation website, and I was quite impressed by the large array of resources on offer.<br>
+I began by reading through the first few sections of F# for fun and profit. As I followed along I typed out the various examples to try and get a handle on how everything worked. After I felt I was starting to get a handle on it, I decided to write one of my favourite projects to learn a new language - a guessing game. Mine looked like this:<br>
+<pre><code class="fsharp">
+open System
+
+let r = Random()
+let secretNum = r.Next(1, 100)
+printfn "Secret Num is between 1-100"
+let mutable found = false
+while (not found) do
+    printfn "Enter a guess:"
+    let guess_s = Console.ReadLine()
+    let guess = Convert.ToInt32(guess_s)
+    match guess with
+    | guess when secretNum = guess ->
+        printfn "You guessed correctly!"
+        found <- true
+    | guess when guess > secretNum ->
+        printfn "Lower"
+    | _ ->
+        printfn "Higher"
+
+</code></pre><br>
+Looking back now, I am not super happy with this code to be honest. You can tell that I am much more comfortable with an imperative style, and while Rust has taught me to love pattern matching, for the most part this could have been written in Python and not look that different.<br><br>
+Another important lesson I took away from this, is that the .NET API's are really quite helpful, being able to call the 'Console' and 'Convert' methods here is super handy, and you have the extra security of knowing these have been battle tested over the years.</p><br><br>
+<p>The next thing I did was sign up for 'exercism', once again at the behest of the F# foundation. This has turned out to be an excellent resource thus far. I have completed 12 problems on the F# track so far and have enjoyed them greatly, especially appreciating that each problem is generally geared toward teaching you some discrete concept.<br>
+I will share just two problems and talk a little about what I have learned so far using these as examples:</p><br>
+<ul>
+<li>1. RNA Transcription</li>
+<pre><code class="fsharp">
+let toRna (dna: string): string =
+    dna
+    |> String.map (fun x ->
+        match x with
+        | 'G' -> 'C'
+        | 'C' -> 'G'
+        | 'T' -> 'A'
+        | 'A' -> 'U'
+        | _ -> ' ')
+</code></pre>
+<li>2. Queen Attack </li>
+<pre><code class="fsharp">
+
+let allowed pos = pos > -1 && pos < 8
+
+let create (position: int * int) =
+    match position with
+    | (r, c) when allowed r && allowed c -> true
+    | _ -> false
+
+let difference a b = abs (a - b)
+
+let diagonallyAttacked (a: int * int) (b: int * int) =
+    let cmpARow = a |> fst |> difference
+    let cmpACol = a |> snd |> difference
+    (b |> fst |> cmpARow) = (b |> snd |> cmpACol)
+
+let canAttack (queen1: int * int) (queen2: int * int) =
+    (=) (queen1 |> fst) (queen2 |> fst) ||
+    (=) (queen1 |> snd) (queen2 |> snd) ||
+    diagonallyAttacked queen1 queen2
+</pre></code>
+</ul><br>
+<p>
+What I like about the first one, and generally functional programming as a whole, is that the code so closely corresponds to what you want to do. In this case it even has the nice property of looking like it too. We want to take all 'G's and make them 'C's, and you could figure as much just by glancing at the code with little to no programming knowledge at all. <br><br>
+The take-away I got from the Queen Attack problem was the power of partial application of functions. Even though I spent some time studying Haskell at university, and I certianly utilised parial application, it never really struck me how cool it is. In the diaganollyAttacked function I set up a comparison with the values of a tuple and while sure, this could all be collapsed into one line, I think it reads better to be able to give this a name. As I think there can be little doubt what cmpARow will do, especially with the help of an editor telling you the type of this variable.<br><br>
+There's plenty more I'd like to write about Types, the insanely nice |> operator, and even some things I didn't like initially, but I think I will keep this short(er) for now. As there will be plenty more time for depth as I continue to explore. For now I can say that I am excited to continue learning F#, and am quite taken with it as a language for now. My one concern is where it will fit in the stack. I feel it's most likely that I will use it server-side, but perhaps WASM with Bolero is worth exploring too. Time will tell.<br><br>
+- etopiei (25/05/2020)
+</p>
