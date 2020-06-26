@@ -166,7 +166,7 @@ set -x
 trap read debug
 </code></pre><br>
 At the beginning of the script, and by doing this I saw the following when I saved the text output and grepped for the results:<br>
-<img alt="bash-flag" src="img/uglybash.png"><br>
+<img alt="bash-flag" src="/img/uglybash.png"><br>
 So, although I didn't use zsh, the flag was mine. I'll be curious to read how other people solved this challenge though.<br><br>
 </p>
 <h2>misc/CaaSiNO</h2>
@@ -238,11 +238,15 @@ int main() {
 }
 </code></pre><br>
 So it seems we have a format string vulnerability, which I think I've only exploited once before so this was a bit of a learning experience. After reading a couple of articles and papers (<a href="http://www.cis.syr.edu/~wedu/Teaching/cis643/LectureNotes_New/Format_String.pdf">paper</a>, <a href="https://www.exploit-db.com/docs/english/28476-linux-format-string-exploitation.pdf">tutorial</a>, <a href="https://security.stackexchange.com/questions/153583/how-to-leak-addresses-with-format-string-exploits">stack exchange post</a>) I felt pretty confident I could exploit this, and thankfully it was a near identical situation to <a href="https://teambi0s.gitlab.io/bi0s-wiki/pwning/format-string/leak/">this article</a> so I utilised what I'd learnt there and got the flag in the end.<br>
-<img src="img/string-exploit.png" alt="Format String Exploit"><br>
+<img src="/img/string-exploit.png" alt="Format String Exploit"><br>
 And that was the final challenge I completed. All in all it was a very enjoyable CTF, I liked learning new things and will try be more involved in CTF competitions in future. I think our team came 250th overall which is pretty good. Thanks to the team, and the organisers for a great event. To see any of the other challenges, or read some other write-ups check out <a href="https://github.com/redpwn/redpwnctf-2020-challenges">redpwn's GitHub</a> and thanks for reading.<br><br>
 - etopiei (26/6/2020)
 </p>
 <style>
+img {
+    width: 80%;
+    margin-left: 10%; 
+}
 pre {
 	line-height: initial;
 	font-size: initial;
