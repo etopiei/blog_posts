@@ -45,7 +45,7 @@ If we use the tables above, and decide to stick to 3-byte UTF-8 sequences for si
 Okay, so technicalities out of the way, what does this mean our string needs to look like? Something like this is what's required:<br>
 776/776+776/776+776/776
 <br>
-The especially astute amongst you may have noticed here that these values, conforming to the pattern described above, is also equal to 3. This is a great start, and in fact what was used in the eventual payload, but we are going to have to do a lot better. Because although <a href="SMBC-COMIC">3 is pretty close to pi</a>, it is this last fractional part where the real difficulty lies.<br><br>
+The especially astute amongst you may have noticed here that these values, conforming to the pattern described above, is also equal to 3. This is a great start, and in fact what was used in the eventual payload, but we are going to have to do a lot better. Because although <a href="https://www.smbc-comics.com/comic/2010-01-30">3 is pretty close to pi</a>, it is this last fractional part where the real difficulty lies.<br><br>
 One more thing to note quickly before we move on is the fact that the sequence I gave as an example above would not be valid, as it's padding is slightly wrong. Most of the numbers we use are 3-digits, because it is easier then to divide and add the parts needed to make up pi, but the final 3-byte seqeunce needs one additional character in order to be valid base64 and not need '=' padding, as this would cause the input to not be evaluated correctly. We will solve this problem in the next step, but I wont' go into detail about this.
 </p><br>
 <h2>Precision</h2>
