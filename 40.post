@@ -1,6 +1,6 @@
 <p>
 Recently I particpated in another CTF. This time it was TSG CTF, and despite finding it very difficult it was still a good experience.<br>
-I devoted most of my time during this CTF to the Misc challenge marked 'Beginner's Misc'. Although I had a brief look at some oother problems this is the only one I was able to solve in the end, along with some help from my friend.<br><br>
+I devoted most of my time during this CTF to the Misc challenge marked 'Beginner's Misc'. Although I had a brief look at some other problems this is the only one I was able to solve in the end, along with some help from my friend.<br><br>
 </p>
 <h2> The Problem </h2>
 <p>
@@ -33,9 +33,9 @@ Now the challenge had really begun.
 <h2>UTF-8 and base64 at War</h2>
 <p>
 While the bytes I generared in the code above, would certainly equal my desired string when base64 encoded, the trick lies in the fact that not all sequences of bytes are valid UTF-8 as the Wikipedia page suggests. And the error given above about 'invalid continuation byte' refers to the sequences in the table below:<br>
-<img src="img/utf-8-table.png" alt="UTF8 Table"><br>
+<img src="/img/utf-8-table.png" alt="UTF8 Table"><br>
 Another trick here, is that base64, aiming to be a dense format for information encodes it's characters in 6 bits, which makes things super confusing. In order to provide some clarity I have also provided the base64 character table below, as I spent the rest of the day staring at these two tables and fiddling with numbers:<br>
-<img src="img/base64-table.png" alt="Base64 Table"><br>
+<img src="/img/base64-table.png" alt="Base64 Table"><br>
 Okay, so what are our options, the most attractive option in the UTF-8 table is the 3-byte sequence. The reason for this being that 3-bytes = 24bits and this divides evenly into the base64 characters length (if you recall from earlier - is 6 bits) so we can be more consistent with the format of the bytes and their correspondence to characters in our result.<br><br>
 Okay, if you are still with me, well done, as that's the most confusing bit out of the way. Now let's dive into how to construct a number vaguely resembling pi from these unique constraints.<br>
 </p>
@@ -69,4 +69,13 @@ And back came the flag!<br><br>
 This was a very unusual, but highly enjoyable challenge, in the process I learnt a lot about UTF-8 as well as base64. There was a lot of trial and error involved but it was a huge relief to get this flag in the end. One more note, I could not have completed this challenge without help from my friend Andy. He came up with the idea for utilising the 3-byte sequences for easier patterns in the exploit text. And in fact he completed this challenge before I did, though we used a similar method to get there, his code was cleaner and made it a bit easier to get to the end product. So big kudos there, and thanks for the help.
 </p><br><br>
 <p> - etopiei (19/07/2020) </p>
-
+<style>
+img {
+    width: 80%;
+    margin-left: 10%; 
+}
+pre {
+	line-height: initial;
+	font-size: initial;
+}
+</style>
