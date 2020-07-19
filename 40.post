@@ -37,8 +37,8 @@ While the bytes I generared in the code above, would certainly equal my desired 
 Another trick here, is that base64, aiming to be a dense format for information encodes it's characters in 6 bits, which makes things super confusing. In order to provide some clarity I have also provided the base64 character table below, as I spent the rest of the day staring at these two tables and fiddling with numbers:<br>
 <img src="/img/base64-table.png" alt="Base64 Table"><br>
 Okay, so what are our options, the most attractive option in the UTF-8 table is the 3-byte sequence. The reason for this being that 3-bytes = 24bits and this divides evenly into the base64 characters length (if you recall from earlier - is 6 bits) so we can be more consistent with the format of the bytes and their correspondence to characters in our result.<br><br>
-Okay, if you are still with me, well done, as that's the most confusing bit out of the way. Now let's dive into how to construct a number vaguely resembling pi from these unique constraints.<br>
-</p>
+Okay, if you are still with me, well done, as that's the most confusing bit out of the way. Now let's dive into how to construct a number vaguely resembling pi from these unique constraints.
+</p><br>
 <h2>Baking a Pi</h2>
 <p>
 If we use the tables above, and decide to stick to 3-byte UTF-8 sequences for simplicity's sake, we see that our 3-byte sequence can begin with any digit between 4 and 7. It must be then be followed by a digit, again between 4 and 7 (note the '10' bit sequence in position 3 and 4 necessary to make a valid UTF-8 seqeunce). Then the next number must be either '2' or '6' (though hypothetically this could be a plus, it makes things a bit trickier, so I decided to ignore this possibility). This is due to the '10' sequence needing to be now in the 5th and 6th bits of the base64 character. The good news with the 3-byte sequence is that the last 6 bits are free, so we can do any character there, though in reality most of the time we want either '+' or '/' for reasons that I hope will soon become clear.<br><br>
