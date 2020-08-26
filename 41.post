@@ -13,27 +13,27 @@ This decision led me down a bit of a rabbit hole, but I certainly learned a lot 
 I pretty quickly stumbled onto some great blog posts about connecting to the Polar devices which are the most prominent bluteooth HR devices on the market. These were helpful as from their methodolgies and tools I could start cobbling together something that would be able to do what I wanted.<br>
 After reading a little about this I realised that the way this and other similar devices work is via the GATT (Generic Attribute Profile) protocol which is based on the ATT (Attribute Protocol). Therefore I need to use some blutooth library to discover 'services' available on my HR sensor. One of these services was the battery, and another, more helpfully was the HR measurement. According to the bluetooth spec, the measurement for HR was a 'characterstic' which could be read. After a lot of fiddling and trying different tools I managed to read the data with bluetoothctl. However this was only one part of my problem solved.<br>
 I realised that although I could read the values it would be much better to have a stream of values, so problem one was to be able to poll/listen to the changes in heart rate. The second problem I had was that the values were just hex at this point, and it wasn't quite as simple as just converting it to decimal. But we'll come back to that in a second.<br>
-The polling problem turned out to be a very easy one to solve, bluetoothctl allows you to use a 'notify on' command instead of read and then it will report the value each time it is recieved from the heart rate monitor. This was perfect, and things were starting to come together well now.<br>
+The polling problem turned out to be a very easy one to solve, bluetoothctl allows you to use a 'notify on' command instead of read and then it will report the value each time it is received from the heart rate monitor. This was perfect, and things were starting to come together well now.<br>
 <pre><code>
 [COOSPO H6 0017925]# select-attribute /org/bluez/hci0/dev_EB_48_6B_02_72_8B/service0009/char000a
 [COOSPO H6 0017925:/service0009/char000a]# notify on
 </code></pre><br>
 For the other issue I had to consult the bluetooth spec sheet where I read that the values returned as the heart rate measurement was constructed like so:<br>
-<img src="/img/blutooth-spec.png"><br>
+<img src="/img/bluetooth-spec.png"><br>
 So it was simply a matter of extracting the relavant hex data and then converting that to decimal, taking note of the bit that configured how large the value was.<br>
 </p>
 <h2>Display</h2>
 <p>Having solved most of the problems I was feeling pretty happy with how things were going and wrote a script in python that utilised the python bluetooth 'gatt' library to read the bluetooth attributes. I could now print the readings to console and it was satisfying seeing them change as I did jumping jacks or lay down. For a while I fiddled around with creating a GUI or using websocketd to create a cool UI for this little script but in the end I decided it was more hassle than it was worth and settled for clearing the screen, printing a heart emoji and then the reading next to it each time a new value came through. I was very pleased with the end result, and it looks pretty good on my stream too, so mission accomplished!<br>
-<img src="/img/heartrate.png">
-<img src="/img/stream-heartrate.png">
+<img src="/img/heartrate.png"><br>
+<img src="/img/stream-heartrate.png"><br>
 </p>
 <h2>References</h2>
 <p>These resources were invaluable in working this all out and will help a lot if you are ever interested in doing anything similar:
 <a href="https://www.raywenderlich.com/231-core-bluetooth-tutorial-for-ios-heart-rate-monitor">iOS Tutorial to Connect to Heart Rate Monitor</a><br>
 <a href="http://joost.damad.be/2013/08/experiments-with-bluetooth-low-energy.html">Blog Post about BLE</a><br>
-<a href="https://nob.ro/post/polar_h10_ubuntu/">Blog Post connecting to Polar H10</a><br><br>
+<a href="https://nob.ro/post/polar_h10_ubuntu/">Blog Post connecting to Polar H10</a><br>
 <a href="https://www.bluetooth.com/specifications/gatt/characteristics/">Bluetooth Spec - GATT Characteristics</a><br>
-<a href="https://www.bluetooth.com/specifications/gatt/services/">Bluetooth Spec - GATT Services</a><br>
+<a href="https://www.bluetooth.com/specifications/gatt/services/">Bluetooth Spec - GATT Services</a><br><br>
 <a href="https://github.com/etopiei/heartrate-hacks">The code for my script</a><br>
 </p>
 <p>
