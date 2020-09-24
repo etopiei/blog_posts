@@ -6,17 +6,17 @@ A couple of weeks ago I decided to try out meal prepping. Honestly I don't know 
 I first decided to check out meal prepping when I stumbled across a website that let you enter your details (height, weight, activity level, goal, dietary preferences) and from this information it constructs a day plan of what to eat ensuring you get the right amounts of all the macro-nutrients. For me, I wanted to gain muscle, so the output was high in calories total and concentrated in fats and protein (read; A butt load of avocado and nuts). So I decided to give this a try for a week, making a few changes along the way, and seeing how I went. One issue however was that the free version of this tool only generated a day plan, but the jokes on them, because I have no issue with eating the same thing every day.<br>
 For my first week I ate:<br>
 <ul>
-    <span>Breakfast</span>
+    <strong>Breakfast</strong>
     <li>Banana</li>
     <li>Celery with peanut butter</li>
     <li>Pumpkin seeds</li>
-    <span>Lunch</span>
+    <strong>Lunch</strong>
     <li>Vegan grilled cheese</li>
     <li>Nut mix</li>
-    <span>Dinner</span>
+    <strong>Dinner</strong>
     <li>Zoodles with avocado sauce and cherry tomatoes</li>
     <li>Protein shake</li>
-    <span>Snacks</span>
+    <strong>Snacks</strong>
     <li>Dairy Free Yoghurt with oats</li>
     <li>Peanuts</li>
 </ul>
@@ -46,5 +46,12 @@ Probable the best thing about this 'diet' if you can call it that, is that I am 
 img {
 	width: 80%;
 	margin-left: 10%;
+}
+ul {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+ul li {
+	margin-left: 32px;
 }
 </style>
