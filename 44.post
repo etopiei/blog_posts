@@ -1,0 +1,110 @@
+<p>
+At work we recently expanded our collection of NanoLeaf tiles so that one of the walls at work has a big grid of programmable lights.<br>
+The dimensions of these lights is 16x6 and as soon as they were installed, myself and some colleagues were super excited and started hacking away.<br>
+In this post, I'll cover what we've worked on so far, plans for the future, and a little about the tech behind the lights.<br>
+</p>
+
+<h3>Tech</h3>
+<p>
+The lights expose a couple of different interfaces for their variety of functions. The main one is an HTTP API from which you can set a tile to be a particular colour, or change the effect of a whole 'canvas group'.<br>
+There is also a UDP Event Stream which sends touch/hover data. You can register for this by sending a GET request to the lights with an HTTP header specifying the UDP port you would like the events streamed back to.<br>
+(Side note: The GET request has to remain open for the UDP events to be sent, so you basically have to maintain a bunch of idle connections which seems really silly to me.)<br>
+The UDP API is worth it though, as the latency is heaps better, and the events are much more reliable compared to the HTTP Server Sent Events version of the same API.<br>
+Anyway, to make a long story short - there is now a simple python API that beams a 'frame' up to the lights. Simply send a list of x, y, rgb values to this endpoint and hey presto! The wall will light up!<br>
+My co-workers did an awesome job setting this up to work nicely. I helped write the UDP parser but a lot of the grunt work was done prior to my joining the team, (while the light collection was much smaller).<br>
+Most of what I have been working on these last few weeks has been a Typescript library to be able to interact with the tiles through an easy to use interface. I've abstracted over some of the more annoying code that would otherwise have to be constantly re-written between applications, and I'm pretty proud of the toolbox I've whipped up.<br>
+Let's dive in and see some of the things it can do.
+</p><br>
+
+<h3>Text Renderer</h3>
+<p>
+Demo:
+<video width="80%" controls="controls">
+<source src="/img/text-small.mp4" type="video/mp4">
+</video>
+</p>
+<p>
+The first task I was excited to get cracking on was a text renderer. Now that the grid was big enough (mostly), I thought it would be super awesome to be able to display messages on the tiles.<br>
+This task did however have a surprising amount of complexity.<br>
+<strong>Step 1: Find a font</strong><br>
+Okay, this part was pretty easy. There are a couple of fonts out there made for small numbers of pixels. In the process I learnt a lot about fonts. But in the end I found a couple of 4x6 fonts that appeared to be about as good as I could get while constrained to a 6 pixel high width.<br>
+<strong>Step 2: Convert this font to a pixel map</strong><br>
+This was a lot harder! Because of how fonts are drawn it was frustratingly difficult to be able to take a font and then receive a list of pixel values on a grid. Perhaps I would of had more luck with a bitmap font, but these proved difficult to find.<br>
+Instead: I ended up using a tool I found on GitHub to convert the font to Rust and from here it wasn't much work to translate this to javascript (as the structures were fairly similar textually).<br>
+From here we were golden, after a couple of corrections on direction, the font came out nicely on a 4x6 grid for most of the ascii characters! Which is perfectly fine for our purposes here.<br>
+Moving right along.
+</p><br>
+
+<h3>Pub Countdown</h3>
+<p>
+We of course now needed to test out our new super powers, so once the text renderer was integrated into the Typescript library I set out to build a pub countdown.<br>
+For context: Each Friday is steeped in anticipation, as we head to the pub for our running 3:00 booking. To enhance the excitement I thought it would be fun to countdown the final hour of work before we have to leave.<br>
+The code ended up being pretty simple (which I was quite pleased about, because I went through quite a lot of iterations on the client library in order to make it more ergonomic).<br>
+Most of the time was spent fiddling with dates in Javascript (yuck, please come soon <a href="https://tc39.es/proposal-temporal/docs/">Temporal</a>)
+And then the rest of the code looked something like this:<br>
+<pre><code class="js">
+import { renderText, HorizontalScrollEffect, createLoopEffect, composeEffects }
+const effects = composeEffects(HorizontalScrollEffect, createLoopEffect(20));
+const pubFrames = renderText(`Pub Time!!`, [255, 0, 0], effects);
+
+while (secondsLeft) {
+    const countdownFrames = renderText(`${countdownMinutes}${countdownSeconds}`, [255, 0, 0]);
+    APIDisplay.display(countdownFrames);
+    secondsLeft--;
+}
+
+APIDisplay.display(pubFrames);
+</code></pre><br>
+(Note: This is an approximation/simplification of what actually runs - pretend all these variables have sensible values)<br>
+</p><br>
+
+<h3>Snake</h3>
+<p>
+Demo: 
+<video width="80%" controls="controls">
+<source src="/img/snake-small.mp4" type="video/mp4">
+</video>
+</p><br>
+<p>
+My next challenge was snake which was pretty basic to write. There is a main game loop and some global variables. This one was probably one of the more satisfying things I wrote for the nanoleaf. It's instantly recognizable and show-cases what is possible with the nanoleaf.<br>
+I'll spare the code snippets, as there is no particular section that is of special interest I don't think.
+</p><br>
+
+<h3>Tetris</h3>
+<p>
+Demo: 
+<video width="80%" controls="controls">
+<source src="/img/tetris-small.mp4" type="video/mp4">
+</video>
+</p><br>
+<p>
+Tetris was much trickier. Along the way I learnt about the blocks and how the game works some more. I'd only ever played tetris casually, so I wasn't sure of some of the more technical mechanics of the game.<br>
+What I ended up implementing was a little simpler in a couple of ways. Most of these were geared around simplicity of code, as I didn't want to spend too long on it.<br>
+1. No wall-kicks/flips out-of-bounds. <br>
+Usually in tetris if you flip near a wall and would usually end up with a piece or more out-of-bounds it kicks you back in bounds and aligns the block to the wall. Similarly if you flip the block '----' as soon as it arrives it would go above the screen. In both these cases I thought it would be easier to only allow flips/movement if where the block will end up is not filled and not out of bounds. This makes the game a little worse to play, as your flips are a little constrained toward the middle of the screen, but overall isn't a deal breaker for playing the game.<br>
+2. No drag-down<br>
+Usually if you hold down the block accelerates down. Though this wouldn't be too difficult to implement, I instead chose to leave your options as: 'Normal Speed' or 'Instant Drop' (with space) and that seems to work well enough.<br>
+3. No 'bag' method<br>
+Again, a pretty simple one, but it was easier to keep selecting random blocks instead of the OG tetris method of putting all the pieces in a 'bag' and then selecting one at a time randomly until the bad runs out. I may actually change this eventually, as getting the same piece multiple times in a row is annoying.<br>
+One thing I am quite proud of is the display of what block is coming next. This improvement was suggested by a colleague and was a pretty simple change. The grid of lights has an extra pixel at the end of the grid, so I re-purposed that pixel to display the colour of the next block, which improves the game experience markedly. (note: this was added after the video)<br>
+All in all, making tetris was the most fun project for the lights so far, and I'm quite pleased with the result. Thinking about how to implement the blocks, grid and rotating it such that the code logic is written top-down, but the display is left-right.
+</p><br>
+
+<h3>Future Plans</h3>
+<p>
+We have grand plans for the nanoleaf. A rather large list of ideas resides on my computer. Some of the exciting things coming up are:<br>
+<ul>
+ <li>Audio Visualiser</li>
+ <li>Pipedrive Integration (to display a message when we win bids)</li>
+ <li>Pong</li>
+ <li>Space Invaders</li>
+ <li>Minesweeper (using the touch interactions)</li>
+ <li>And many more...</li>
+</ul>
+</p><br>
+
+<h3>Conclusion/Closing Notes</h3>
+<p>
+It's been awesome working on these little projects at the end of the day. It makes me more excited to come to work, and hopefully my friends at work get a kick out of it too. It's been fun working on a less serious project, being free to choose the tech, and having an outlet for some creativity.
+</p><br>
+<p> - etopiei (11/05/2021)</p>
