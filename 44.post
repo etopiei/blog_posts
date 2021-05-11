@@ -20,6 +20,7 @@ Let's dive in and see some of the things it can do.
 <p>
 Demo:<br>
 <video width="480" height="320" controls="controls">
+<source src="/img/text.webm" type="video/webm">
 <source src="/img/text-small.mp4" type="video/mp4">
 </video>
 </p>
@@ -62,6 +63,7 @@ APIDisplay.display(pubFrames);
 <p>
 Demo: <br>
 <video width="480" height="320" controls="controls">
+<source src="/img/snake.webm" type="video/webm">
 <source src="/img/snake-small.mp4" type="video/mp4">
 </video>
 </p><br>
@@ -74,6 +76,7 @@ I'll spare the code snippets, as there is no particular section that is of speci
 <p>
 Demo:<br>
 <video width="480" height="320" controls="controls">
+<source src="/img/tetris.webm" type="video/webm">
 <source src="/img/tetris-small.mp4" type="video/mp4">
 </video>
 </p><br>
