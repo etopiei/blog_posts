@@ -18,8 +18,8 @@ Let's dive in and see some of the things it can do.
 
 <h3>Text Renderer</h3>
 <p>
-Demo:
-<video width="80%" controls="controls">
+Demo:<br>
+<video width="480" height="320" controls="controls">
 <source src="/img/text-small.mp4" type="video/mp4">
 </video>
 </p>
@@ -60,8 +60,8 @@ APIDisplay.display(pubFrames);
 
 <h3>Snake</h3>
 <p>
-Demo: 
-<video width="80%" controls="controls">
+Demo: <br>
+<video width="480" height="320" controls="controls">
 <source src="/img/snake-small.mp4" type="video/mp4">
 </video>
 </p><br>
@@ -72,8 +72,8 @@ I'll spare the code snippets, as there is no particular section that is of speci
 
 <h3>Tetris</h3>
 <p>
-Demo: 
-<video width="80%" controls="controls">
+Demo:<br>
+<video width="480" height="320" controls="controls">
 <source src="/img/tetris-small.mp4" type="video/mp4">
 </video>
 </p><br>
@@ -108,3 +108,16 @@ We have grand plans for the nanoleaf. A rather large list of ideas resides on my
 It's been awesome working on these little projects at the end of the day. It makes me more excited to come to work, and hopefully my friends at work get a kick out of it too. It's been fun working on a less serious project, being free to choose the tech, and having an outlet for some creativity.
 </p><br>
 <p> - etopiei (11/05/2021)</p>
+<style>
+ul {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+ul li {
+	margin-left: 32px;
+}
+pre {
+	line-height: initial;
+	font-size: initial;
+}
+</style>
