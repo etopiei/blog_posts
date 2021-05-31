@@ -1,8 +1,8 @@
 <p>I recently started a netball team with a group of friends. This has been a tremendous experience. The team culture is awesome, we have lots of fun (despite our limited success) and I've really enjoyed meeting new people and bringing groups together.<br>
 That aside, I found early in our first season some stress around setting the positions for everyone. Initially the team was small enough that everyone could basically work it out among themselves. However the team quickly grew, and managing the positions so they were fair, as well as playing to people's strengths quickly became a chore.<br>
-Thankfully, I saw this as an opportunity and spent the next week hacking away.<br>
+Thankfully, I saw this as an opportunity, and spent the next week hacking away.<br>
 </p><br>
-<h3>The Idea</h3><br>
+<h3>The Idea</h3>
 <p>
 The idea was pretty simple. I figured there were two things we wanted to solve for:<br>
 <ol>
@@ -11,7 +11,7 @@ The idea was pretty simple. I figured there were two things we wanted to solve f
 </ol><br>
 Having worked with MiniZinc a little bit in university I was <strike>confident</strike> hopeful that I could write a solution relatively easily.<br>
 </p><br>
-<h3>Intro to MiniZinc</h3><br>
+<h3>Intro to MiniZinc</h3>
 <p>
 MiniZinc is a 'constraint modelling' programming language (developed at my Alma Mater - Monash University). It's unlike any other language I've really worked with, in that it is primarily declarative. Meaning that you only tell the computer 'what' you want not 'how' to do it. This is quite an adjustment in thinking compared to regular programming, however thankfully this sort of thing is a well-suited problem, so there were many examples online of similar enough problems to get me most of the way there.<br>
 Let's take a look at a simple MiniZinc example first to get a taste of it:<br>
@@ -30,7 +30,7 @@ The final directive solve to 'satisfy' is what sets MiniZinc going. It will atte
 In this case there are lots of options, MiniZinc will simply output the first solution it finds.<br><br>
 Side Note: There are several types of ways to solve. The main ones are: 'satisfy', 'maximise' and 'minimize' and each of these do more or less what it sounds like.<br>
 </p><br>
-<h3>Modelling Netball Positions</h3><br>
+<h3>Modelling Netball Positions</h3>
 <p>
 So, now we have a bit more of an idea of how MiniZinc works - how do we translate this method of problem solving onto our netball team dilemma?<br>
 There are a couple of constraints on the netball team. Let's map these out one by one and see how they translate to MiniZinc's declarative syntax.<br>
@@ -109,7 +109,7 @@ for court_players in itertools.combinations(people, 7):
 </code></pre><br>
 I then attached this to a website (whose design I won't subject you to) where you can select 7 players and it will spit out the pre-generated best team. The problem with this is that with ~18 people having filled out the survey there is ~14k possible teams (last I checked) and all these calculations take about 3 hours. This is fine for now, because once it's calculated we are all good. But should the team grow much bigger this may become infeasible.<br>
 </p><br>
-<h3>Result</h3><br>
+<h3>Result</h3>
 <p>
 The results have been good overall I think. We now make the team on the morning of the game, using the website and some handy excel to work out who will play where each quarter. (this painstaking work is done by two of my fantastic team-mates - did I mention yet how great this team is?)<br>
 It has made things much clearer, ensured people get a fair amount of game time and has reduced the management effort on game day.<br>
@@ -123,7 +123,7 @@ On the second point, I think there's not much to do. Unfortunately no matter how
 I think that about wraps it up. It's been fun making this little tool. I really enjoy making tools that are useful in little niches and this one certainly scratched one of my itches.<br>
 Oh, and for those playing at home, I'm afraid this did not effect our win percentage, which remained at zero for quite some time. Turns out there's not an algorithm for everything...<br>
 </p><br>
-<h5>Also See</h5><br>
+<h3>Also See</h3>
 <p>
 If this post interested you at all, please check out <a href="https://www.minizinc.org">MiniZinc</a>, it is a super awesome, and you'd be surprised the problems you can solve with it, that were previously out of reach.<br>
 Thanks for reading. <br>
