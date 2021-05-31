@@ -88,7 +88,7 @@ Usually in tetris if you flip near a wall and would usually end up with a piece 
 2. No drag-down<br>
 Usually if you hold down the block accelerates down. Though this wouldn't be too difficult to implement, I instead chose to leave your options as: 'Normal Speed' or 'Instant Drop' (with space) and that seems to work well enough.<br>
 3. No 'bag' method<br>
-Again, a pretty simple one, but it was easier to keep selecting random blocks instead of the OG tetris method of putting all the pieces in a 'bag' and then selecting one at a time randomly until the bad runs out. I may actually change this eventually, as getting the same piece multiple times in a row is annoying.<br>
+Again, a pretty simple one, but it was easier to keep selecting random blocks instead of the OG tetris method of putting all the pieces in a 'bag' and then selecting one at a time randomly until the bag runs out. I may actually change this eventually, as getting the same piece multiple times in a row is annoying.<br>
 One thing I am quite proud of is the display of what block is coming next. This improvement was suggested by a colleague and was a pretty simple change. The grid of lights has an extra pixel at the end of the grid, so I re-purposed that pixel to display the colour of the next block, which improves the game experience markedly. (note: this was added after the video)<br>
 All in all, making tetris was the most fun project for the lights so far, and I'm quite pleased with the result. Thinking about how to implement the blocks, grid and rotating it such that the code logic is written top-down, but the display is left-right.
 </p><br>

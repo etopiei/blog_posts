@@ -1,0 +1,154 @@
+<p>I recently started a netball team with a group of friends. This has been a tremendous experience. The team culture is awesome, we have lots of fun (despite our limited success) and I've really enjoyed meeting new people and bringing groups together.<br>
+That aside, I found early in our first season some stress around setting the positions for everyone. Initially the team was small enough that everyone could basically work it out among themselves. However the team quickly grew, and managing the positions so they were fair, as well as playing to people's strengths quickly became a chore.<br>
+Thankfully, I saw this as an opportunity and spent the next week hacking away.<br>
+</p><br>
+<h3>The Idea</h3><br>
+<p>
+The idea was pretty simple. I figured there were two things we wanted to solve for:<br>
+<ol>
+    <li>Equal Game Time (or as near as possible)</li>
+    <li>People playing in positions they like</li>
+</ol><br>
+Having worked with MiniZinc a little bit in university I was <strike>confident</strike> hopeful that I could write a solution relatively easily.<br>
+</p><br>
+<h3>Intro to MiniZinc</h3><br>
+<p>
+MiniZinc is a 'constraint modelling' programming language (developed at my Alma Mater - Monash University). It's unlike any other language I've really worked with, in that it is primarily declarative. Meaning that you only tell the computer 'what' you want not 'how' to do it. This is quite an adjustment in thinking compared to regular programming, however thankfully this sort of thing is a well-suited problem, so there were many examples online of similar enough problems to get me most of the way there.<br>
+Let's take a look at a simple MiniZinc example first to get a taste of it:<br>
+<pre><code>
+var 1..3: x;
+var 1..3: y;
+constraint x + y > 2;
+solve satisfy;
+</code></pre><br>
+(Unfortunately highlight.js - the syntax highlighter used by my blog does not support MiniZinc yet)<br>
+While this code might look a little funny at first, given some time you may be able to make a reasonable guess at what it does. And you'd be right!<br>
+This type of problem (solving linear equations) is MiniZinc's bread and butter. Let's give a quick run-down of this example<br>
+We first define two variables (x and y) - these are variables in the more mathematical sense (compared to the programming sense). We also define their bounds to be between 1 and 3.<br>
+We then set a 'constraint' on these variables that 'x' + 'y' must be greater than 2. This is where MiniZinc's magic really kicks in.<br>
+The final directive solve to 'satisfy' is what sets MiniZinc going. It will attempt to find compatible values for all variables, such that all the constraints are satisfied.<br>
+In this case there are lots of options, MiniZinc will simply output the first solution it finds.<br><br>
+Side Note: There are several types of ways to solve. The main ones are: 'satisfy', 'maximise' and 'minimize' and each of these do more or less what it sounds like.<br>
+</p><br>
+<h3>Modelling Netball Positions</h3><br>
+<p>
+So, now we have a bit more of an idea of how MiniZinc works - how do we translate this method of problem solving onto our netball team dilemma?<br>
+There are a couple of constraints on the netball team. Let's map these out one by one and see how they translate to MiniZinc's declarative syntax.<br>
+<strong></strong>1. We have 7 positions to assign to players:</strong><br>
+<pre><code>
+enum positions = { GS, GA, WA, C, WD, GD, GK }
+enum people;
+array[people] of var positions: assigned;
+</code></pre><br>
+<strong>2. No person can be in more than one position</strong><br>
+<pre><code>
+constrain alldifferent(p in people) (assigned[p]);
+</code></pre><br>
+(Note: MiniZinc has some built in helpers - `alldifferent` is one of these.)<br>
+<strong>3. No more than 1 male per third (this was the tricky one!)</strong><br>
+<pre><code>
+var int: malesInForward;
+var int: malesInCentre;
+var int: malesInDefence;
+
+var int: maleInGS;
+var int: maleInGA;
+var int: maleInWA;
+var int: maleInC;
+var int: maleInWD;
+var int: maleInGD;
+var int: maleInGK;
+
+constraint maleInGS = if exists (m in Males) (assigned[m] = GS) then 1 else 0 endif;
+constraint maleInGA = if exists (m in Males) (assigned[m] = GA) then 1 else 0 endif;
+constraint maleInWA = if exists (m in Males) (assigned[m] = WA) then 1 else 0 endif;
+constraint maleInC = if exists (m in Males) (assigned[m] = C) then 1 else 0 endif;
+constraint maleInWD = if exists (m in Males) (assigned[m] = WD) then 1 else 0 endif;
+constraint maleInGD = if exists (m in Males) (assigned[m] = GD) then 1 else 0 endif;
+constraint maleInGK = if exists (m in Males) (assigned[m] = GK) then 1 else 0 endif;
+
+constraint malesInForward = maleInGA + maleInGS;
+constraint malesInCentre = maleInWA + maleInWD + maleInC;
+constraint malesInDefence = maleInGK + maleInGD;
+
+constraint malesInForward < 2;
+constraint malesInCentre < 2;
+constraint malesInDefence < 2;
+</code></pre><br>
+Honestly, this is a little verbose, I'm sure there would be a better way to do this, but I couldn't work it out. So instead I used this, and it works well enough.<br>
+<strong>4. We want to maximise people getting the positions they would like</strong><br>
+<pre><code>
+array [people] of var int: score;
+constraint forall(p in people) (
+  score[p] = pref[p, assigned[p]]
+);
+
+solve maximize sum(score);
+</code></pre>
+This one is a little trickier. Basically what I did was ask everyone in the team to rate their preferred positions. Giving a higher score to their favourite position and a lower score for their dis-liked positions.<br>
+This meant we wanted the model to find a valid combination (taking into account rules 1->3) that gets the best score in overall team happiness.<br>
+There are a couple of details I skimmed over a little bit - for instance you may have noticed the 'people' enum is blank, as a group of 7 is selected at a time and the best team found from these.<br>
+</p><br>
+<h3>Difficulties</h3>
+<p>
+It took me quite a few hours to build this model (as I've not worked with MiniZinc much before) but since then it has been pretty smooth sailing.<br>
+To generate all the team combinations I wrote a python script that iterates over all possible valid team combinations and runs the MiniZinc model to find the best positions, it looked something like this (simplified):<br>
+<pre><code class="python">
+for court_players in itertools.combinations(people, 7):
+    # We are only interested in combinations with >= 4 women
+    court_females = [player for player in court_players if player in females] 
+    if len(court_females) >= 4:
+        # Find the best court positions for this combination.
+        court_males = [player for player in court_players if player in males] 
+        court_preferences = []
+        for player in court_players:
+            court_index = people.index(player)
+            court_preferences.append(preferences[court_index])
+        result = findBestPositionsForPlayers(court_players, court_males, court_females, court_preferences)
+        results["positions"].append({"sorted_team": sorted(court_players), "team": court_players, "positions": parts[0], "match": match})
+</code></pre><br>
+I then attached this to a website (whose design I won't subject you to) where you can select 7 players and it will spit out the pre-generated best team. The problem with this is that with ~18 people having filled out the survey there is ~14k possible teams (last I checked) and all these calculations take about 3 hours. This is fine for now, because once it's calculated we are all good. But should the team grow much bigger this may become infeasible.<br>
+</p><br>
+<h3>Result</h3><br>
+<p>
+The results have been good overall I think. We now make the team on the morning of the game, using the website and some handy excel to work out who will play where each quarter. (this painstaking work is done by two of my fantastic team-mates - did I mention yet how great this team is?)<br>
+It has made things much clearer, ensured people get a fair amount of game time and has reduced the management effort on game day.<br>
+There are two issues that I see with this approach however:<br>
+<ol>
+    <li>The model doesn't yet handle quarters/bench</li>
+    <li>If someone is injured (an unfortunately regular occurrence) it falls down</li>
+</ol>
+For 1, I think with a little more tweaking the model could handle the bench and assigning positions over quarters, but this is work that I haven't had sufficient time/motivation for.<br>
+On the second point, I think there's not much to do. Unfortunately no matter how nicely you craft a solution, it must, at one point or other deal with the messiness of the real world. Which is a lesson in and of itself.<br>
+I think that about wraps it up. It's been fun making this little tool. I really enjoy making tools that are useful in little niches and this one certainly scratched one of my itches.<br>
+Oh, and for those playing at home, I'm afraid this did not effect our win percentage, which remained at zero for quite some time. Turns out there's not an algorithm for everything...<br>
+</p><br>
+<h5>Also See</h5><br>
+<p>
+If this post interested you at all, please check out <a href="https://www.minizinc.org">MiniZinc</a>, it is a super awesome, and you'd be surprised the problems you can solve with it, that were previously out of reach.<br>
+Thanks for reading. <br>
+</p>
+<p>
+ - etopiei (31/05/21)
+</p>
+
+<style>
+ul {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+ol {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+ol li {
+	margin-left: 32px;
+}
+ul li {
+	margin-left: 32px;
+}
+pre {
+	line-height: initial;
+	font-size: initial;
+}
+</style>
