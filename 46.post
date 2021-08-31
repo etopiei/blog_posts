@@ -1,0 +1,33 @@
+<p>
+Earlier this year I made the switch to Spotify after finally succumbing to the pleas of majority of my friends to leave Apple Music.
+Overall I would say this has been a good decision. Owning a thinkpad and android phone means accessing Spotify is much easier on these devices, more friends are on Spotify, and there is a greater mix of user created playlists.<br>
+There is how ever one big 'but'... (Hold onto your horses, imma rant now)
+</p><br>
+<h3>How Queues Should Work in Music Apps</h3>
+<p>
+To me, there aren't a lot of requirements around queues in music apps. And despite the name, I think it's important that they operate not according to the computer scientists understanding of the 'queue' data structure. i.e. You should be able to edit either end of a queue.
+The things I want to be able to do with a song/album/playlist are as follows:
+</p><br>
+<ol>
+	<li>Play immediately</li>
+	<li>Add to end of queue</li>
+	<li><strong>Add to START of queue</strong></li>
+</ol>
+<p>
+Now I don't know, perhaps I'm in the minority here, and everyone else uses these music apps differently, but for me, this last bullet point which Spotify fails to address drives me bonkers.<br>
+A quick search of the Spotify forums reveal <a href="https://community.spotify.com/t5/Other-Podcasts-Partners-etc/QUEUE-management-still-sucks-after-how-many-years/td-p/1797103">similar frustrations</a> though.<br>
+I'm sure Spotify has a lot of complexity in their code-base, but I struggle to believe that this could not be achieved relatively easily.<br>
+For now though, I am destined to wait until the current song I am listening to ends, then hitting play on this new song which is frankly ridiculous.
+As the forum post I linked states as well, every other music service handles this better. It baffles me that Spotify fails at something so core to their app's experience.
+</p><br>
+<h3>But Wait! There's more!
+<p>
+To add the final cherry on top of this carrot cake (that's right, they don't even deserve real cake) is that the queuing behaves differently depending on whether you select and album, playlist or song. I would give more detail here, but I am honestly not sure how it works. It feels like a round of roulette every time I take action in the Spotify app. Which breaks an important rule of UX, to behave in a way the user expects. The fact that I don't know what will happen when I choose something to listen to in the app is bizarre, seeing as that is almost entirely the point of the app. And all this could be fixed by simply allowing the user to add to the start of a queue.
+</p><br>
+<h3>Conclusion</h3>
+<p>
+To be fair to Spotify, there is a lot they do that I really like. Their app's UI is really good for the most part. The integration between desktop/mobile is really well done and I enjoy the social features a lot. I don't want to give the impression that I don't like Spotify, I am really happy I switched. But please Spotify, for the love of all that is good, fix your queue.
+</p><br>
+<p>
+ - etopiei (31/08/2021)
+</p>
