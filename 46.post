@@ -20,7 +20,7 @@ I'm sure Spotify has a lot of complexity in their code-base, but I struggle to b
 For now though, I am destined to wait until the current song I am listening to ends, then hitting play on this new song which is frankly ridiculous.
 As the forum post I linked states as well, every other music service handles this better. It baffles me that Spotify fails at something so core to their app's experience.
 </p><br>
-<h3>But Wait! There's more!
+<h3>But Wait! There's more!</h3>
 <p>
 To add the final cherry on top of this carrot cake (that's right, they don't even deserve real cake) is that the queuing behaves differently depending on whether you select and album, playlist or song. I would give more detail here, but I am honestly not sure how it works. It feels like a round of roulette every time I take action in the Spotify app. Which breaks an important rule of UX, to behave in a way the user expects. The fact that I don't know what will happen when I choose something to listen to in the app is bizarre, seeing as that is almost entirely the point of the app. And all this could be fixed by simply allowing the user to add to the start of a queue.
 </p><br>
@@ -31,3 +31,19 @@ To be fair to Spotify, there is a lot they do that I really like. Their app's UI
 <p>
  - etopiei (31/08/2021)
 </p>
+<style>
+ul {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+ol {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+ol li {
+	margin-left: 32px;
+}
+ul li {
+	margin-left: 32px;
+}
+</style>
