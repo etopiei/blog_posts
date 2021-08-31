@@ -5,14 +5,14 @@ There is how ever one big 'but'... (Hold onto your horses, imma rant now)
 </p><br>
 <h3>How Queues Should Work in Music Apps</h3>
 <p>
-To me, there aren't a lot of requirements around queues in music apps. And despite the name, I think it's important that they operate not according to the computer scientists understanding of the 'queue' data structure. i.e. You should be able to edit either end of a queue.
+To me, there aren't a lot of requirements around queues in music apps. And despite the name, I think it's important that they operate not according to the computer scientists understanding of the 'queue' data structure. i.e. You should be able to edit either the start OR the end of a queue.
 The things I want to be able to do with a song/album/playlist are as follows:
 </p><br>
 <ol>
 	<li>Play immediately</li>
 	<li>Add to end of queue</li>
 	<li><strong>Add to START of queue</strong></li>
-</ol>
+</ol><br>
 <p>
 Now I don't know, perhaps I'm in the minority here, and everyone else uses these music apps differently, but for me, this last bullet point which Spotify fails to address drives me bonkers.<br>
 A quick search of the Spotify forums reveal <a href="https://community.spotify.com/t5/Other-Podcasts-Partners-etc/QUEUE-management-still-sucks-after-how-many-years/td-p/1797103">similar frustrations</a> though.<br>
