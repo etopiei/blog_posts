@@ -1,0 +1,35 @@
+<p>
+I recently acquired a fitbit and so far have been very happy with it! However an issue did surface that I wanted to talk a little bit about, as it has been irking me for a while and I think I finally have a good illustrative example. So today let's talk about APIs. And more specifically I want to talk about personal access tokens and OAuth.
+</p><br>
+
+<h3>The good (Personal Access Tokens)</h3><br>
+
+<p>
+I have previously written a quick little CLI tool that integrates with the Up API (<a href="https://github.com/etopiei/up-cli">here</a> if you are interested). And this was fun and painless to write. I mostly did it to write some more things in Rust, but I found the API easy to work with, well documented and super <strong>fast</strong> to get up and running.
+</p>
+<p>
+I believe a large part of the reason that this was such a pleasant experience (aside from Up's fantastic documentation) was the fact that you can authenticate via a PERSONAL ACCESS TOKEN. This has some important advantages that I'd like to discuss briefly.
+</p>
+<p>
+Firstly, it makes testing easy. I can create a token for my account and before committing paste my token directly into the code to try things out. This is all that was required to get setup and to see a successful response. Note: I didn't have to setup a domain, callback URLs, scopes etc. In order to commmit the code all I have to do is load the token from a file or the environment and my git history is clean and I can continue work. Secondly, it allows me to write code to only access my data, and solve the problems that interest me. I can focus on the parts of the API that I want to access and I don't have to think about scopes or refreshing a token. Once I have my token it is mine to use and I can do so as I see fit. Now with the stage set, let's move onto Oauth...
+</p><br>
+
+<h3>The bad (Oauth)</h3><br>
+
+<p>
+If I recall correctly I started this blog post talking about my fitbit, so at this point you may be disoriented and confused. Fear not though, we are getting back on track! Until I had my fitbit I recorded my bike riding on Strava. After buying a fitbit I still wanted to record my rides (and importantly, only my rides) on Strava but record them using my fitbit. My first thought was to see if there was an integration (which there was). However the official fitbit->strava sync tool does not allow filtering activities and automatically triggers. I didn't want my walks and runs to be synced to Strava so I had no choice but to abandon this approach.
+</p><br>
+<p>
+Despite the disappointment of the official sync client, I thought it was no big deal and that Fitbit and Strava would no doubt have APIs. And although I was correct, I was a little sad to discover that both APIs utilised Oauth for authentication. 
+</p><br>
+<p>
+The problem I have with this is essentially the inverse of what I wrote about personal access tokens above. The way Oauth APIs like Fitbit and Strava work is that you register an app. Then you can specify scopes tou require and clients authenticate access to their accounts. The important part of the previous sentence (imho) is the use of the plural client<strong>s</strong>. Because although you can setup an account just for you with your newly registered app, the authentication is made for being multi-user. To take your first steps with an OAuth API you have to (in some cases) register a domain, setup the callback urls, setup a server to handle these requests etc. While most of this code and setup is fairly boilerplate, and one could argue simple - it's a lot more work than should be required to access my data. Now, from the perspective of an organisation or an API developer at a company I can certainly see the appeal. With Oauth the security is much better, and you do work once and anything that anyone writes can benefit anyone else. The big difference is that now each application developer has to do more. And the 'more' is not the fun work of making a great app or integration. The 'more' is boilerplate, and only tangentially related to the task at hand. Long story short, I'm really not a fan.</p>
+
+<h3>The ugly (Resorting to puppeteer)</h3><br>
+After shaking my fists at the sky for an appropriate amount of time, I ceased whinging and started thinking about possible solutions. In the end the easiest solution I could come up with was writing a Playwright/Puppeteer script to perform actions in the browser. The idea that the path of least resistance is spawning an entire browser to do some fairly basic automation is frustrating. I do wish data was more freely accessibly, but I understand economic pressures to maintain walled gardens and keep data within the platforms these companies create.
+
+In the end, before I had time to write my scripts, I found a wonderful app that did exactly what I was looking for. (Shoutout to <a href="https://play.google.com/store/apps/details?id=nl.appyhapps.healthsync&gl=US">HealthSync</a>) But this whole experience has certainly got me thinking about how data (especially my own data) is difficult to access at times. I can't see this changing really anytime soon, but I hope that as new data laws pass and consuemer attitudes change about their own data, we can get to a place where the best option isn't running a browser in all the tiny little scripts I'd like to write.
+
+<br>
+- etopiei (20/07/2022)
+
