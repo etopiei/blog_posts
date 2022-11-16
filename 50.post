@@ -1,6 +1,6 @@
 <p>
 I recently purchased a new phone. This was a decision that took a lot of thinking, as it relates to a couple of things that I spend a lot of time thinking about. I thought I'd use this post to explore some of my thoughts, and explain why ultimately I landed on the Unihertz Titan Slim.
-<img src="/img/titan.png">
+<img src="/img/titan.jpg">
 </p><br>
 
 <h3>My relationship to technology</h3>
@@ -33,3 +33,10 @@ And with all this going on, I can see why blackberry folded (aside from the mill
 <p>
 - etopiei (16/11/2022)
 </p>
+
+<style>
+img {
+    width: 80%;
+    margin-left: 10%; 
+}
+</style>
