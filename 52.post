@@ -1,0 +1,15 @@
+<p>
+This is just a quick PSA for anyone who gets stuck similarly to how I did. To make a Wi-Fi hotspot on Android use 2.4GHz instead of 5GHz (sometimes required for older devices) you need to do two things:
+</p>
+<ol>
+    <li>Turn on 'Extend compatibility' in Settings > Network and Internet > Hotspot and tethering > Wi-Fi hotspot</li>
+    <li><strong>Turn off device Wi-Fi.</strong></li>
+</ol>
+<p>
+The second point is bolded because it is not made clear at all. I wasted about half an hour trying to connect a raspberry pi to my phone's hotspot before I eventually stumbled upon a google forum that had a helpful comment (<a href="https://support.google.com/pixelphone/thread/134064084/where-to-go-toggle-or-change-hotspot-band-from-5ghz-to-2-4ghz-with-android-12-on-a-pixel-4a?hl=en">here</a>).<br>
+It's frustrating that this is so hidden. It used to be that Android displayed the toggle for 'Extend compatability' as '2.4GHz', but now this option is much more hidden. Additionally, if you turn this toggle on with Wi-Fi on, there is no warning that this will no longer have the desired effect, which is really bad imhho.<br>
+In any case, that's my mini rant for today done, and I hope this post can help future people who get stuck dealing with this.
+</p>
+<p>
+- etopiei (24/04/2023)
+</p>
