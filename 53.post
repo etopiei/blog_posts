@@ -5,25 +5,25 @@ The way this watch face represents time is a collection of bits per digit:
 </p><br>
 <p>
 
-e.g.
+e.g.<br>
 
-  ◻︎◼︎ = 1
-◻︎◼︎◻︎◼︎ = 5
- ◻︎◼︎◻︎ = 2
-◻︎◼︎◻︎◻︎ = 4
+  ◻︎◼︎ = 1<br>
+◻︎◼︎◻︎◼︎ = 5<br>
+ ◻︎◼︎◻︎ = 2<br>
+◻︎◼︎◻︎◻︎ = 4<br>
 
 Becomes: 15:24
 </p><br>
 <p>
 
-Honestly, I'd rather it represent the hours and minutes as individual blocks so the previous example would look like:
+Honestly, I'd rather it represent the hours and minutes as individual blocks so the previous example would look like:<br>
 
- ◻︎◼︎◼︎◼︎◼︎ = 15
-◻︎◼︎◼︎◻︎◻︎◻︎ = 24
+ ◻︎◼︎◼︎◼︎◼︎ = 15<br>
+◻︎◼︎◼︎◻︎◻︎◻︎ = 24<br>
 
 This is slightly better, down to 12 bits!
 
-But this got me thinking, how many bits do we actually need?
+But this got me thinking, how many bits do we actually need?<br>
 </p>
 
 <h2>Down the rabbit hole</h2><br>
@@ -61,23 +61,23 @@ So my intuition that my preferred format would be more effecient is true! But un
 
 Let's see what happens if we apply perhaps the most obvious optimisation... AM/PM. This evenly divides the data into half (at the cost of 1 bit) but allows us to forgoe everything upwards of 12 in the hours place.
 
-The effect of this is we now need, for the watch face format:
+The effect of this is we now need, for the watch face format:<br>
 
 
-   ◻︎ = 0
-◻︎◻︎◼︎◼︎ = 3
-  ◻︎◼︎ = 2
-◻︎◼︎◻︎◼︎ = 4
-   ◼︎ = PM
+   ◻︎ = 0<br>
+◻︎◻︎◼︎◼︎ = 3<br>
+  ◻︎◼︎ = 2<br>
+◻︎◼︎◻︎◼︎ = 4<br>
+   ◼︎ = PM<br>
 </p><br>
 <p>
 This has no effect on overall bit size unfortunately, the AM/PM bit is utilised to save us one bit in the hour, but this trade still results in 13 total bits.
 
-The effect of this change on the preferred format is:
+The effect of this change on the preferred format is:<br>
 
-  ◻︎◻︎◼︎◼︎ = 03
-◻︎◼︎◼︎◻︎◻︎◻︎ = 24
-     ◼︎ = PM
+  ◻︎◻︎◼︎◼︎ = 03<br>
+◻︎◼︎◼︎◻︎◻︎◻︎ = 24<br>
+     ◼︎ = PM<br>
 
 </p><br>
 <p>
@@ -85,11 +85,11 @@ Unfortunatelty this still doesn't quite get us there! We again can lose one bit 
 
 Looking back at the stats from before, majority of the loss is coming from representing: 0-9 with 4 bits, or 0-23  as 5 bits, or 0->12 as 4 bits.
 
-So my next idea was the following:
+So my next idea was the following:<br>
 
-0->1 = 1 bit
-AM/PM = 1 bit
-_h:mm = 10 bits (0->959)
+0->1 = 1 bit<br>
+AM/PM = 1 bit<br>
+_h:mm = 10 bits (0->959)<br>
 
 I won't subject you to how this looks, as it's not an improvement really, let's get back to thinking about this some more.
 </p><br>
@@ -106,19 +106,19 @@ hh:_m This can be represented in 8 bits (0->239 can represent the rest)
 
 So we did it!!!
 
-Taking the example from before represented by our new (somewhat) easy to read watch face we get:
+Taking the example from before represented by our new (somewhat) easy to read watch face we get:<br>
 
-      ◻︎◼︎◻︎ = 2
- ◼︎◻︎◻︎◼︎◼︎◻︎◼︎◻︎ = 154
+      ◻︎◼︎◻︎ = 2<br>
+ ◼︎◻︎◻︎◼︎◼︎◻︎◼︎◻︎ = 154<br>
 
 Which becomes: 15:24!
 
 </p><br>
 <p>
-Analysing this as before we get:
+Analysing this as before we get:<br>
 
- - 3 bits for 0->6 (7/8 states used)
- - 8 bits for 0->239 (240/256 states used)
+ - 3 bits for 0->6 (7/8 states used)<br>
+ - 8 bits for 0->239 (240/256 states used)<br>
 
 </p><br>
 <p>
