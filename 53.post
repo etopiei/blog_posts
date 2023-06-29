@@ -2,7 +2,7 @@
 I recently downloaded a watch face for my Garmin which is in binary. This is great fun! But also it got me thinking...
 
 The way this watch face represents time is a collection of bits per digit:
-</p><br>
+</p>
 <p>
 
 e.g.<br>
@@ -12,7 +12,7 @@ e.g.<br>
  ◻︎◼︎◻︎ = 2<br>
 ◻︎◼︎◻︎◻︎ = 4<br>
 
-Becomes: 15:24
+Becomes: 15:24 represented by 13 bits.
 </p><br>
 <p>
 
@@ -23,40 +23,41 @@ Honestly, I'd rather it represent the hours and minutes as individual blocks so 
 
 This is slightly better, down to 12 bits!
 
-But this got me thinking, how many bits do we actually need?<br>
-</p>
-
+But this got me thinking, how many bits do we actually need?
+</p><br>
 <h2>Down the rabbit hole</h2><br>
 
 <p>
 
-My first thought was that the whole time could be a single number, the maximum number we need to represent is: 2359
+My first thought was that the whole time could be a single number, the maximum number we need to represent is: 2359<br>
 This needs a max of: 12 bits, so we have our answer right?
 Wrong! Becasuse there are a whole host of numbers between 0->2359 that are not valid times!
 
-There are a total of: 60 * 24 representable times = 1440
-We can represent all of these within 11 bits (with quite a bit of room to spare) so my next question was, is there a way to represent the times in a way that uses the minimum number of bits, such that it's still easy to read.
+There are a total of: 60 * 24 = 1440 representable times.<br>
+We can represent all of these within 11 bits (with quite a bit of room to spare) so my next question was, is there a way to represent the times in a way that uses the minimum number of bits, such that it's still easy to read?
 </p><br>
 <p>
 
 Thinking about where we are losing out space-wise in the two examples given above:
 
-Watch face format:
+Watch face format:<br>
+<ul>
+ <li> 2 bits for 0->2 (3/4 states used) </li>
+ <li> 4 bits for 0->9 (10/16 states used) </li>
+ <li> 3 bits for 0->5 (6/8 states used) </li>
+ <li> 4 bits for 0->9 (10/16 states used) </li>
+</ul><br>
 
- - 2 bits for 0->2 (3/4 states used)
- - 4 bits for 0->9 (10/16 states used)
- - 3 bits for 0->5 (6/8 states used)
- - 4 bits for 0->9 (10/16 states used)
-
-My preferred format:
-
- - 5 bits for 0->23 (24/32 states used)
- - 6 bits for 0->59 (60/64 states used) 
+My preferred format:<br>
+<ul>
+ <li> 5 bits for 0->23 (24/32 states used) </li>
+ <li> 6 bits for 0->59 (60/64 states used) </li>
+</ul>
 
 So my intuition that my preferred format would be more effecient is true! But unfortunately it doesn't quite get us to an optimum solution. 
 </p><br>
 
-<h2>Let's try some stuff(TM)</h2>
+<h2>Let's try some stuff(TM)</h2><br>
 <p>
 
 Let's see what happens if we apply perhaps the most obvious optimisation... AM/PM. This evenly divides the data into half (at the cost of 1 bit) but allows us to forgoe everything upwards of 12 in the hours place.
@@ -81,7 +82,7 @@ The effect of this change on the preferred format is:<br>
 
 </p><br>
 <p>
-Unfortunatelty this still doesn't quite get us there! We again can lose one bit on the hours in exchange for the AM/PM, but it doesn't matter, we still can't get down to 11!
+Unfortunatelty this still doesn't quite get us there! We again can lose one bit on the hours in exchange for the AM/PM, but it doesn't matter, we still can't get down to 11!<br>
 
 Looking back at the stats from before, majority of the loss is coming from representing: 0-9 with 4 bits, or 0-23  as 5 bits, or 0->12 as 4 bits.
 
@@ -99,10 +100,10 @@ The biggest problem with the last example is that 60-100 is always included but 
 If we can limit this digit maybe it'll work...
 
 </p><br>
-<h2>Eureka!</h2>
+<h2>Eureka!</h2><br>
 <p>
-__:m_ This m can be represented by 3 bits (0->5)
-hh:_m This can be represented in 8 bits (0->239 can represent the rest)
+__:m_ This m can be represented by 3 bits (0->5) <br>
+hh:_m This can be represented in 8 bits (0->239 can represent the rest)<br>
 
 So we did it!!!
 
@@ -125,8 +126,8 @@ Analysing this as before we get:<br>
 Now you may complain that this isn't easy enough to read, but sometimes being optimal comes with a price. The feeling you get when you look at your wrist and know that you couldn't do better though... now that's priceless.
 
 Ultimately this was a fun exercise and an interesting thought experiment. I'd be interested to hear if anyone can come up with alternative representations that also use 11 bits (and maybe are a bit easier to read). Until next time (ha! get it?!)...
-</p><br>
-<p><br>
+</p>
+<p>
 
 <a href="https://optimalclock.etopiei.com">Check out an implementation of the clock here</a><br>
 
