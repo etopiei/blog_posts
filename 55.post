@@ -1,0 +1,52 @@
+<p>
+Today I'd like to share a couple of little projects I worked on at a previous job. In part because they are fun and a little silly,
+in part because I no longer own the code and I want to document these ideas, and lastly because I think there is something to take away from these projects.
+But we'll get to that later.
+</p><br>
+<h3>Sneezebot</h3>
+<p>
+Sneezebot was a lot of fun, and I even gave a lightning talk at PyCon about it! You can watch that talk here:
+</p>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/52UdeHX2QuU?si=gmHgwR9cB8QssqNs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<br>
+<p>
+If you'd prefer to read, the tldr is: I build a Slack app that counted 'blessings' for sneezes in the office and gave points to the fastest blesser.
+This was a really fun project, and made it more fun for me, and (I hope) for others to come into the office and socialize together.
+</p><br>
+<h3>Eloji</h3>
+<p>
+Being a predominantly remote company, not everyone could enjoy Sneezebot. Which leads in nicely to me next project at work: Eloji!
+</p><br>
+<p>
+The work Slack had an enormous collection of emojis (I think ~5000 when I initially wrote Eloji) and it was wonderful to be able to express
+your most apt reaction to any given situation. As well as this, the creativity, in-jokes, and fun on display in the myriad of hand-crafted emojis was a sight to behold.
+I did find though, that many times, someone I was talking to would use an emoji and my response would be: "wait, that emoji exists?!"
+Eloji was my chess-addled brain's way of trying to solve this problem. The idea was more or less stolen from the Social Network, but less (hopefully no at all) misogynistic.
+Essentially, the site would show you two emoji, and ask you which you prefer, and from these votes establish a ranking of all the emojis in our collection.
+The idea here was that over time, amazing emoji would rise to the top and you could see new (to you) emojis, as well as who made them, so you can thank them for their fine efforts.
+</p><br>
+<h3>Now</h3>
+<p>
+I've since moved on to work at a new company, and sadly no longer recieve any congratulations for a particular fast "bless you". Rest-assured though, I have left both Eloji and SneezeBot in the very capable hands of a friend (who has continued development of some very cool enhancements to these apps).
+</p><br>
+<p>
+But missing these projects did leave me with a few thoughts (dangerous, I know). Firstly, building stupid things is a real joy.
+It can be easy to forget as a programmer, that I think most of us get into this whole racket to CREATE.
+Side note: One of my first ever blog posts is about this, back when I was using <a href="https://medium.com/@etopiei/what-i-wish-people-knew-about-programming-da521ad32c27">Medium</a>.
+</p><br>
+<p>
+The job of 'software engineer' turns out to be quite different from the 'coding' you fall in love with. And I feel that pain sometimes. Sometimes I really like all the things involved in my job, and ultimately you have to make something broadly useful, work with others, document things, test, gather requirements etc. for someone to pay you to write software.
+But... sometimes I miss, just making something that doesn't matter. Making something where I decide the requirements, and the 'definition of done'. And I would encourage other programmers to find where that sort of joyful work can be for them.
+</p><br>
+Secondly, while I've referred to these projects as silly (and they are), I do think they say something about me.
+Delighting and bemusing people with these projects really gave me a kick, and I hope it made people feel better at work day-to-day.
+Because as silly as they are, the way I look at these projects is that they are creations to bring people together. Two of my greatest passions are technology, and people. And being able
+to use technology to enhance peoples' lives is something that makes me really proud and happy. Especially at work. It's such a cliche that 1/3 your life is work ... yada yada. But I think it's
+one of the few areas of life where it's almost expected that there will be a baseline level of pain, and with the state of things, I don't think that's unreasonable. But I do wish it wasn't like that. And I do want to do what I can to change that. Even if it is creating silly apps.
+</p><br>
+<p>
+So get out there, be creative! Make dumb stuff! Dumb stuff has a surprising power to bring people together and bring out the best in everyone. And that's what really motivates me.
+</p><br>
+<p>
+- etopiei (15/04/2024)
+</p>
