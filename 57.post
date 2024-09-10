@@ -11,7 +11,7 @@ There is honestly a lot to like about Lucky. I think the things that stood out t
   <li>Great CLI/Project Scaffolding</li>
   I was surprised how nice an experience it was to setup a Lucky project. In particular I liked that you could choose whether you wanted to include a front-end in your project. Although Django Rest Framework (DRF) handles this use-case nicely, Django seems to push you more toward using templates, whereas in Lucky they are more explicitly optional. Most Django projects I've worked on have outgrown templates quickly, and so it's nice to be able to start a project with a clean split. Also I liked the way a docker dev environment is included with postrgesql to get going really fast. Additionally, lucky's tools to generate models, run migrations etc. are all quite intuitive and well documented.
   <li>Operations</li>
-  This is a concept I'd come across before, but I really like the idea of Models being pure data, and then seperating out business logic into 'Operations'. Something similar (a service layer) is recommended in <a href="https://github.com/HackSoftware/Django-Styleguide?tab=readme-ov-file#services">this</a> Django guide, and I think it's a good idea. Lucky doing this by defauly I think leads to well organised code.
+  This is a concept I'd come across before, but I really like the idea of Models being pure data, and then seperating out business logic into 'Operations'. Something similar (a service layer) is recommended in <a href="https://github.com/HackSoftware/Django-Styleguide?tab=readme-ov-file#services">this</a> Django guide, and I think it's a good idea. Lucky doing this by default I think leads to well organised code.
   <li>Types</li>
   This is almost an obvious one, but Crystal being statically typed means that it's much clearer (generally) what type you are dealing with at any given time. That said, Crystal and Lucky do a phenomenal job of type inference, so I think besides from my data models I rarely (if ever?) wrote a type by hand which is quite a remarkable achievement. It was a really nice experience moving over to do the front-end and copying the Typescript types from my models and have everything work straight away. I had a lot more confidence in my API, and the FE/BE integration. Even sending data types like 'Date's just worked out of the box.
   <li>N+1 Detection</li>
@@ -43,3 +43,12 @@ Overall I really liked the experience of using Crystal and Lucky for this projec
 <p>
 - etopiei (10/09/2024)
 </p>
+<style>
+ul {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+ul li {
+	margin-left: 32px;
+}
+</style>
