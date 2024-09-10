@@ -1,0 +1,45 @@
+<p>
+On a recent project I decided to try out the Crystal programming language. I had read a little about Crystal in the past and it stuck in my mind as it is statically typed, but still had a high level of expressiveness which seemed like a nice combination. Syntax-wise it's heavily inspired by Ruby, but with compiling to native code with LLVM it goes quite fast. For the project, I wanted to build a relatively small web app, and thought that Crystal would be a good choice. There are quite a few different web frameworks available and I went with what seems to be the most popular one: Lucky. 
+</p><br>
+<p>
+With most of my professional experience being Django I thought it would be interesting to compare and contrast what the Lucky dev experience is like, as well as help out those coming from a similar background who are curious to try Lucky out. 
+</p><br>
+<h3>What I liked</h3>
+<p>
+There is honestly a lot to like about Lucky. I think the things that stood out to me most were:
+<ul>
+  <li>Great CLI/Project Scaffolding</li>
+  I was surprised how nice an experience it was to setup a Lucky project. In particular I liked that you could choose whether you wanted to include a front-end in your project. Although Django Rest Framework (DRF) handles this use-case nicely, Django seems to push you more toward using templates, whereas in Lucky they are more explicitly optional. Most Django projects I've worked on have outgrown templates quickly, and so it's nice to be able to start a project with a clean split. Also I liked the way a docker dev environment is included with postrgesql to get going really fast. Additionally, lucky's tools to generate models, run migrations etc. are all quite intuitive and well documented.
+  <li>Operations</li>
+  This is a concept I'd come across before, but I really like the idea of Models being pure data, and then seperating out business logic into 'Operations'. Something similar (a service layer) is recommended in <a href="https://github.com/HackSoftware/Django-Styleguide?tab=readme-ov-file#services">this</a> Django guide, and I think it's a good idea. Lucky doing this by defauly I think leads to well organised code.
+  <li>Types</li>
+  This is almost an obvious one, but Crystal being statically typed means that it's much clearer (generally) what type you are dealing with at any given time. That said, Crystal and Lucky do a phenomenal job of type inference, so I think besides from my data models I rarely (if ever?) wrote a type by hand which is quite a remarkable achievement. It was a really nice experience moving over to do the front-end and copying the Typescript types from my models and have everything work straight away. I had a lot more confidence in my API, and the FE/BE integration. Even sending data types like 'Date's just worked out of the box.
+  <li>N+1 Detection</li>
+  If you've used Django and Sentry before, you'll be all too familiar with this one. Lucky takes a hard-line stance on N+1 queries and returns a `500` status code if your code ever does a N+1 query. Just to be clear, this only happens in development. In production the code runs fine even if there is an N+1. Opinions may vary on this, but I really like this and I think it gels well with the static typing approach of fixing things early. In the course of developing the app I had to fix quite a few of these errors (I didn't have much handle on the ORM intially) but the help text provided was enough to pretty quickly fix it up with judicious usage of `preload`.
+  <li>In-built Magic</li>
+  In some ways this is a bit of a double-edged sword, but there's so much magic going on in Lucky. It's hard to be concrete, because I haven't delved into the implementation all that much, but suffice to say, it feels like you have to write so little code to recieve so much functionality in exchange. After creating models: endpoints, serializers, save operations, and more all felt easy. But I still had the flexibility to modify where necessary. I don't know how they've done all this, but it feels really nice to use, while not boxing you in.
+  <li>Speed</li>
+  To clarify this, I mean runtime speed. I was consistently impressed by the response times of Lucky. There are some <a href="https://www.techempower.com/benchmarks/#section=data-r22&hw=ph&test=db&b=4&l=ypto4d-sd&c=a&d=8&o=8&f=zik0zb-zik0zj-zik0zj-zik0zj-zik0zj-zik0zj-zik0zj-zik0zj-zik0zj-zik0zj-yelngf-zik0zj-zik0zj-zik0zj-1ekf">benchmarks</a> I saw that suggested 5-10x improvement on Django almost across the board. And although I've only a bit of experience using Lucky, it does feel VERY fast. Responses come effectively instantly on local host, and the console reports <50ms responses for most requests. Native code of course has a huge headstart on any interpreted language, but nonetheless it was still really impressive, and made the app feel extra snappy. This is probably one of the best things about Lucky.
+</ul>
+</p>
+<br>
+<h3>What I didn't like</h3>
+<p>
+<ul>
+  <li>Compilation Speed</li>
+  The downside to blazing fast runtime speed is that compilation is quite slow. While working on this pretty tiny project it regularly took ~10s to compile after saving. This is kinda ridiculous, and while maybe not the end of the world, does mean you spend quite a bit of time waiting for compilation between testing things. I read an <a href="https://forum.crystal-lang.org/t/incremental-compilation-exploration/5224">interesting discussion</a> on the Crystal forums about this, and I think there are some plans to improve this, but there are also technical limitations to how far these efforts can go without changing the language significantly. I did find the slow compilation especially noticeable after I switched to Vite + Vue3 + Typescript on the frontend and had instant editor feedback for all my actions and realised how much I'd missed this while working on Lucky code. That said, backend probably doesn't require as fast a response cycle, so maybe this is something you adjust to over time. Plus I think with more experience writing Crystal I'd need the compilers help a little less. In any case, certainly a significant down-side.
+  <li>Migration Management</li>
+  We really are spoiled in Django. While Lucky's migrations are quite good, you do have to manually write migrations and rollbacks, and the slightly different syntax between models and migrations were a source of frustration for me. Part of this is just my lack of familiarity, but also, when Django just does this for you, it's hard to justify the pain. The only positive thing I can say in favour of this, is that it does force you to be more concious of exactly how the data is laid out in the databse. I found a <a href="https://github.com/luckyframework/avram/issues/781">GitHub issue</a> discussing auto-migrations while working on this project, but it seems it's unlikely to be included for now.
+  <li>Error Messages</li>
+  I found error messages a bit hit and miss. Sometimes (as mentioned in the N+1 section above) they are fantastic! But other times it's really tricky to work out what's going on. The most prevalant issue I found here was the use of macros (which I suppose is a counter-point to my 'magic' point above). Some of the macro error messages where pretty inpenetrable, and had little reference to the code that they came from. I'd imagine you get better at tracking down where errors occur, but I found it difficult sometimes to find out exactly where the problem was.
+  <li>Smaller Community</li>
+  Not anyone's fault really, as it's a newer project, but the number of Stack Overflow posts, GitHub issues etc. is a lot smaller with Lucky. Googling issues often results in very few results, so it takes a little bit more persistence to work through issues. Combined with my previous point about vague error messages, this does mean it's sometimes quite annoying trying to resolve issues.
+</ul>
+</p><br>
+<p>
+Overall I really liked the experience of using Crystal and Lucky for this project, and think that I may continue to use Lucky where I may have previously used DRF. Both Lucky and Crystal have quite good documentation and I found getting started pretty easy. Although I didn't use all the features (emails, users, templates), the features I did use were well thought out and fit together nicely. For larger projects I think Django still makes more sense to me, as the dev experience would suffer more in a large project I think, plus, the number of high quality libraries to pull from in the Django world are hard to pass up. I look forward to seeing where Lucky and Crystal go though, as with some more improvements I think it could be a really strong contender to Django in the future.
+</p>
+<br>
+<p>
+- etopiei (10/09/2024)
+</p>
